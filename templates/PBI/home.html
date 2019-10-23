@@ -1,9 +1,36 @@
 
 {% extends "base.html" %}
 {% block content %}
-	{% for PBI in dict %}
-		<h1>id: {{ PBI.id }}</h1>
-		<h1>title: {{ PBI.title }}</h1>
+<style>
+th, td {
+	padding: 10px;
+	text-align: center;
+}
 
-	{% endfor %}
+</style>
+	<h2>PRODUCT BACKLOG</h2>
+	<table style="width: 100%">
+		<tr>
+			<th>ID</th>
+    		<th>Title</th>
+    		<th>Status</th>
+    		<th>Sprint <br/> number</th>
+    		<th>Estimated<br/>story point</th>
+    		<th>Detail</th>
+    		<th></th>
+    		<th></th>
+    	</tr>
+		{% for PBI in dict %}
+		<tr>
+			<td>{{ PBI.id }}</td>
+			<td>{{ PBI.title }}</td>
+			<td>{{ PBI.status }}</td>
+			<td> to do </td>
+			<td>{{ PBI.ESP }}</td>
+			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
+			<td>edit</td>
+			<td>delete</td>
+		</tr>
+		{% endfor %}
+	</table>
 {% endblock content %}

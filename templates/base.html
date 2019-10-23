@@ -18,8 +18,8 @@
 <body>
 	<header class="site-header">
 	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-	    <div class="container">
-	      <a class="navbar-brand mr-4" href="{% url 'PBI-home'%}">Backtrack</a>
+	    <div class="container-fluid">
+	      <a class="navbar-brand mr-4" href="{% url 'PBI-home'%}">BackTrack</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	      </button>
@@ -38,20 +38,20 @@
 	  </nav>
 	</header>
 
-	<main role="main" class="container">
+	<main role="main" class="container-fluid">
 	  <div class="row">
-	    <div class="col-md-8">
+	    <div class="col-md-9">
 	      {% block content %}{% endblock %}
 	    </div>
-	    <div class="col-md-4">
+	    <div class="col-md-3">
 	      <div class="content-section">
 	        <h3>Sidebar</h3>
-	        <p class='text-muted'>Click to navigate through pages
+	        <!-- <p class='text-muted'>Click to navigate through pages -->
 	          <ul class="list-group">
 	            <a href="{% url 'PBI-home' %}"><li class="list-group-item list-group-item-light">Product Backlog</li></a>
 	            <a href="{% url 'Sprint-home' %}"><li class="list-group-item list-group-item-light">Sprint Backlog</li></a>
 	          </ul>
-	        </p>
+	        <!-- </p> -->
 	      </div>
 	    </div>
 	  </div>
