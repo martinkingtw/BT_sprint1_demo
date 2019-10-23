@@ -1,0 +1,9 @@
+
+{% extends "PBI/base.html" %}
+{% block content %}
+	{% for PBI in dict %}
+		<h1>id: {{ PBI.id }}</h1>
+		<h1>title: {{ PBI.title }}</h1>
+
+	{% endfor %}
+{% endblock content %}
