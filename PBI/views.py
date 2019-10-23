@@ -16,7 +16,7 @@ dict = [
 
 def home(request):
 	context = {
-		'dict': dict
+		'dict': PBIs.objects.all() 
 	}
 	return render(request, 'PBI/home.html', context)
 
