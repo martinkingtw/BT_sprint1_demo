@@ -3,7 +3,7 @@ from .models import PBIs
 
 def home(request):
 	context = {
-		'dict': PBIs.objects.all() 
+		'dict': PBIs.objects.all().order_by('priority')
 	}
 	return render(request, 'PBI/home.html', context)
 
