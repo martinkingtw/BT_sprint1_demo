@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import PBIs
+from .forms import PBIForm
 
 def home(request):
 	context = {
@@ -21,3 +22,15 @@ class PBDetailView(DetailView):
 
 def about(request):
 	return render(request, 'productBacklog/about.html')
+
+def create_pbi(request):
+	form = PBIForm(request.POST or None)
+	if form.is_valid():
+		form.save()
+		form = PBIForm()
+		return home(request)
+
+	context = {
+		'form': form 
+	}
+	return render(request, 'productBacklog/create.html', context)
