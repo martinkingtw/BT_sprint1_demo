@@ -1,7 +1,9 @@
 from django.urls import path
+from .views import PBListView, PBDetailView
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='productBacklog-home'),
+    path('', PBListView.as_view(), name='productBacklog-home'),
+    path('<int:pk>/', PBDetailView.as_view(), name='productBacklog-detail'),
     path('about/', views.about, name='productBacklog-about'),
 ]
