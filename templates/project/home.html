@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+{% for project in projects %}
+	<h2><a href="{% url 'productBacklog-home'%}">{{ project.title }}</a></h2>
+	<p align="justify">{{ project.details }}</p>
+	<br/>
+{% endfor %}
+<button><a href="{% url 'project-create' %}">Create Project</a></button>
+{% endblock content %}

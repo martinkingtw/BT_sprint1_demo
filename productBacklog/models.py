@@ -1,14 +1,7 @@
 from django.db import models
 from django.urls import reverse
-
+from project.models import Project
 #comment
-class Project(models.Model):
-	title = models.CharField(max_length=20)
-	details = models.TextField()
-	
-	def __str__(self):
-		return self.title
-
 class PBIs(models.Model):
 	priority = models.IntegerField()
 	title = models.CharField(max_length=20)
