@@ -23,7 +23,6 @@ class PBDetailView(DetailView):
 def about(request):
 	return render(request, 'productBacklog/about.html')
 
-<<<<<<< HEAD
 def delete(request):
 	id = request.POST['id']
 	PBIs.objects.get(pk=id).delete()
@@ -31,7 +30,7 @@ def delete(request):
 		'dict': PBIs.objects.all().order_by('priority')
 	}
 	return render(request, 'productBacklog/home.html', context)
-=======
+
 def create_pbi(request):
 	form = PBIForm(request.POST or None)
 	if form.is_valid():
@@ -43,4 +42,3 @@ def create_pbi(request):
 		'form': form 
 	}
 	return render(request, 'productBacklog/create.html', context)
->>>>>>> 78ce2f0c3681683c008b450dcb435cf8769f2a6d
