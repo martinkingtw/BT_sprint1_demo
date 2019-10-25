@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+{% for project in projects %}
+	<h2><a href="#">{{ project.title }}</a></h2>
+{% end for %}
+<button><a href="#">Create Project</a></button>
+{% endblock content %}
