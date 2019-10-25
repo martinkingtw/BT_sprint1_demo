@@ -8,8 +8,8 @@ th, td {
 }
 
 </style>
-	<h2>PRODUCT BACKLOG</h2>
-	<button class="btn btn-outline-info"><a href="{% url 'productBacklog-create'%}">Create New Item</a></button>
+	<h2>{{dict.project_id}}</h2>
+	<button class="btn btn-outline-info"><a href="{% url 'productBacklog-create' 8%}">Create New Item</a></button>
 
 	<table style="width: 100%">
 		<tr>

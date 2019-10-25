@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import PBIs, Project
-from django.shortcuts import get_object_or_404
+
 # from .forms import PBIForm
 
 def home(request):
@@ -13,17 +13,17 @@ def home(request):
 class PBListView(ListView):
 	model = PBIs
 	template_name = 'productBacklog/home.html'
-	context_object_name = 'dict'
 
-	# def dispatch(self, request, *args, **kwargs):
-	# 	self.project = get_object_or_404(Project)
-	# 	return super().dispatch(request, *args, **kwargs)
+	def get(self, request, fk):
+		self.project_id = fk
+		return super().get(self, request)
 
-	# def get_context_data(self, **kwargs):
-	# 	context = super().get_context_data(**kwargs)
-	# 	context['project_id'] = self.project.pk
-	# 	print(context)
-	# 	return context
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project_id'] = self.project_id
+		print(context)
+
+		return context
 
 class PBDetailView(DetailView):
 	model = PBIs
