@@ -57,7 +57,7 @@ class PBCreateView(CreateView):
 		return super().form_valid(form)
 
 class PBUpdateView(UpdateView):
-	template_name_suffix = "_update_form"
+	# template_name_suffix = "_update_form"
 	model = PBIs
 	# print(form.instance.project_id)
 	fields = [
@@ -71,9 +71,9 @@ class PBUpdateView(UpdateView):
 	# 	self.project = get_object_or_404(project)
 	# 	return super().dispatch(request, *args, **kwargs)
 
-	def form_valid(self, form):
-		# form.instance.project_id = project.pk
-		return super().form_valid(form)
+	# def form_valid(self, form):
+	# 	# form.instance.project_id = project.pk
+	# 	return super().form_valid(form)
 
 class projectListView(ListView):
 	model = Project

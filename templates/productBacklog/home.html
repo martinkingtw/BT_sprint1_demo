@@ -32,7 +32,7 @@ th, td {
 			<td>{{ PBI.ESP }}</td>
 			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
 			<td>
-				<form action="http://127.0.0.1:8000/product/{{PBI.id}}/edit/" method="post">
+				<form action="{% url 'productBacklog-edit' PBI.id %}" method="post">
 					{% csrf_token %}
 					<button>edit</button>
 				</form>
