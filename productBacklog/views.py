@@ -45,14 +45,15 @@ class PBCreateView(CreateView):
 	# 	self.project = get_object_or_404(project)
 	# 	return super().dispatch(request, *args, **kwargs)
 
+	"""def clean_priority(self):
+		numOfPBIs = PBIs.objects.all().count() + 1
+		data = self.cleaned_data['priority']
+		if data > numOfPBIs:
+			data = numOfPBIs
+		return data"""
+
 	def form_valid(self, form):
 		# form.instance.project_id = project.pk
-		"""numOfPBIs = PBIs.objects.all().count() + 1
-		if form.cleaned_data['priority'] > numOfPBIs:
-			form.cleaned_data['priority'] = numOfPBIs
-		print(PBIs.objects.all())
-		if self.object > numOfPBIs:
-			form['priority'] = numOfPBIs"""
 		return super().form_valid(form)
 
 class PBUpdateView(UpdateView):

@@ -20,7 +20,7 @@ class PBIs(models.Model):
 	project_id = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
 
 	def __str__(self):
-		return self.priority
+		return self.title
 
 	def get_absolute_url(self):
 		return reverse('productBacklog-home')
