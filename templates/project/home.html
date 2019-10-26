@@ -3,7 +3,10 @@
 {% for project in projects %}
 	<h2><a href="{% url 'productBacklog-home' project.pk %}">{{ project.title }}</a></h2>
 	<p align="justify">{{ project.details }}</p>
+	<a class="btn btn-outline-danger" href="{% url 'project-delete' project.pk %}">Delete project</a>
+	<br/>
 	<br/>
 {% endfor %}
-<button><a href="{% url 'project-create' %}">Create Project</a></button>
+
+<a class="btn btn-outline-info" href="{% url 'project-create' %}">Create Project</a>
 {% endblock content %}

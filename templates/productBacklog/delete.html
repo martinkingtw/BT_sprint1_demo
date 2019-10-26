@@ -3,6 +3,6 @@
 <form method="POST"> {% csrf_token %}
 	<legend>Confirm Delete</legend>
 	<button class="btn btn-outline-danger" type="submit">Delete</button>
-	<a class="btn btn-outline-info" href="{% url 'productBacklog-detail' project_id object.id%}">Cancel</a>
+	<a class="btn btn-outline-info" href="{% url 'productBacklog-detail' project.pk object.id%}">Cancel</a>
 </form>
 {% endblock content %}

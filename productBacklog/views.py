@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.views.generic import (
+	ListView,
+	DetailView, 
+	CreateView, 
+	DeleteView,
+	UpdateView,
+	)
 from .models import PBIs, Project
 from django.shortcuts import get_object_or_404
-
-# from .forms import PBIForm
 
 def home(request):
 	context = {
@@ -58,22 +62,50 @@ class PBCreateView(CreateView):
 		self.project = get_object_or_404(Project, pk=kwargs['fk'])
 		return super().dispatch(request, *args, **kwargs)
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
+
 	def form_valid(self, form):
 		form.instance.project = self.project
 		return super().form_valid(form)
 
-class PBDeleteView(DeleteView):
+class PBUpdateView(UpdateView):
 	model = PBIs
-	template_name = 'productBacklog/delete.html'
-	success_url = '/8/product'
-
-	def get(self, request, pk, fk):
-		self.project_id = fk
-		return super().get(self, request)
+	# print(form.instance.project_id)
+	fields = [
+			'priority',
+			'title',
+			'status',
+			'ESP',
+			'details'
+	]
+	def dispatch(self, request, *args, **kwargs):
+		self.project_id = kwargs['fk']
+		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['project_id'] = self.project_id
+		context['project'] = self.project
+		return context
+
+
+class PBDeleteView(DeleteView):
+	model = PBIs
+	template_name = 'productBacklog/delete.html'
+	def get_success_url(self):
+		return '/' + str(self.project_id) + '/product'
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project_id = kwargs['fk']
+		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
 		return context
 
 class projectListView(ListView):

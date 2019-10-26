@@ -3,6 +3,6 @@
 <h1>Project</h1>
 <form method="POST"> {% csrf_token %}
 	{{ form.as_p }}
-	<input type="submit" name="Save">
+	<button class="btn btn-outline-info" type="submit">Create</button>
 </form>
 {% endblock content %}
