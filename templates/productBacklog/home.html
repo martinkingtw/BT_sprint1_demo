@@ -8,8 +8,8 @@ th, td {
 }
 
 </style>
-	<h2>{{dict.project_id}}</h2>
-	<button class="btn btn-outline-info"><a href="{% url 'productBacklog-create' 8%}">Create New Item</a></button>
+	<h2>PRODUCT BACKLOG</h2>
+	<button class="btn btn-outline-info"><a href="{% url 'productBacklog-create' project_id%}">Create New Item</a></button>
 
 	<table style="width: 100%">
 		<tr>
@@ -25,14 +25,14 @@ th, td {
 		{% for PBI in dict %}
 		<tr>
 			<td>{{ PBI.priority }}</td>
-			<td><a class='pbi-title' href="{% url 'productBacklog-detail' PBI.id%}">{{ PBI.title }}</a></td>
+			<td><a class='pbi-title' href="#">{{ PBI.title }}</a></td>
 			<td>{{ PBI.status }}</td>
 			<td> to do </td>
 			<td>{{ PBI.ESP }}</td>
 			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
 			<td>edit</td>
 			<td>
-			<form action="http://127.0.0.1:8000/product/delete/" method="post">
+			<form action="http://127.0.0.1:8000/8/product/delete/" method="post">
 				{% csrf_token %}
 				<input type="text" value="{{ PBI.id }}" name="id" hidden/>
 				<button>delete</button>
