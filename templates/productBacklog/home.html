@@ -30,13 +30,18 @@ th, td {
 			<td> to do </td>
 			<td>{{ PBI.ESP }}</td>
 			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
-			<td>edit</td>
 			<td>
-			<form action="http://127.0.0.1:8000/product/delete/" method="post">
-				{% csrf_token %}
-				<input type="text" value="{{ PBI.id }}" name="id" hidden/>
-				<button>delete</button>
-			</form>
+				<form action="http://127.0.0.1:8000/product/{{PBI.id}}/edit/" method="post">
+					{% csrf_token %}
+					<button>edit</button>
+				</form>
+			</td>
+			<td>
+				<form action="http://127.0.0.1:8000/product/delete/" method="post">
+					{% csrf_token %}
+					<input type="text" value="{{ PBI.id }}" name="id" hidden/>
+					<button>delete</button>
+				</form>
 			</td>
 
 		</tr>

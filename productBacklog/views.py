@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import PBIs, Project
 from django.shortcuts import get_object_or_404
 # from .forms import PBIForm
@@ -31,6 +31,24 @@ class PBDetailView(DetailView):
 	context_object_name = 'PBI'
 
 class PBCreateView(CreateView):
+	model = PBIs
+	# print(form.instance.project_id)
+	fields = [
+			'priority',
+			'title',
+			'status',
+			'ESP',
+			'details'
+	]
+	# def dispatch(self, request, *args, **kwargs):
+	# 	self.project = get_object_or_404(project)
+	# 	return super().dispatch(request, *args, **kwargs)
+
+	def form_valid(self, form):
+		# form.instance.project_id = project.pk
+		return super().form_valid(form)
+
+class PBUpdateView(UpdateView):
 	model = PBIs
 	# print(form.instance.project_id)
 	fields = [
