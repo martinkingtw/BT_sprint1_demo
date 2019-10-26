@@ -19,6 +19,7 @@ class PBListView(ListView):
 	model = PBIs
 	template_name = 'productBacklog/home.html'
 	context_object_name = 'dict'
+	ordering = ['priority']
 	def get_queryset(self):
 		return PBIs.objects.filter(project_id=self.project_id)
 
