@@ -1,10 +1,10 @@
 from django.shortcuts import render
-
+from project.models import Project
 # Create your views here.
-def home(request):
+def home(request, fk):
 	tmp = {"tmp" : 'tmp'}
 	context = {
 		'dict': tmp,
-		'project_id': 8
+		'project': Project.objects.get(pk=fk)
 	}
 	return render(request, 'SprintBacklog/home.html', context)

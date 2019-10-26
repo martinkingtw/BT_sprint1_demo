@@ -18,13 +18,14 @@ class PBListView(ListView):
 	def get_queryset(self):
 		return PBIs.objects.filter(project_id=self.project_id)
 
-	def get(self, request, fk):
-		self.project_id = fk
-		return super().get(self, request)
+	def dispatch(self, request, *args, **kwargs):
+		self.project_id = kwargs['fk']
+		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['project_id'] = self.project_id
+		context['project'] = self.project
 		return context
 
 class PBDetailView(DetailView):
@@ -32,13 +33,14 @@ class PBDetailView(DetailView):
 	template_name = 'productBacklog/detail.html'
 	context_object_name = 'PBI'
 
-	def get(self, request, pk, fk):
-		self.project_id = fk
-		return super().get(self, request)
+	def dispatch(self, request, *args, **kwargs):
+		self.project_id = kwargs['fk']
+		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['project_id'] = self.project_id
+		context['project'] = self.project
 		return context
 
 class PBCreateView(CreateView):

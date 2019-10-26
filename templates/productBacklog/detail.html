@@ -28,7 +28,7 @@ th, td {
 			<td>{{ PBI.ESP }}</td>
 			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
 			<td><a href="#">edit</a></td>
-			<td><a href="{% url 'productBacklog-delete' project_id PBI.id%}">delete</a></td>
+			<td><a href="{% url 'productBacklog-delete' project.pk PBI.id%}">delete</a></td>
 		</tr>
 
 	</table>
