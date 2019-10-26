@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_noSidebar.html" %}
 {% block content %}
 {% for project in projects %}
 	<h2><a href="{% url 'productBacklog-home' project.pk %}">{{ project.title }}</a></h2>

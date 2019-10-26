@@ -19,26 +19,15 @@ th, td {
     		<th>Sprint <br/> number</th>
     		<th>Estimated<br/>story point</th>
     		<th>Detail</th>
-    		<th></th>
-    		<th></th>
     	</tr>
 		{% for PBI in dict %}
 		<tr>
 			<td>{{ PBI.priority }}</td>
-			<td><a class='pbi-title' href="#">{{ PBI.title }}</a></td>
+			<td><a class='pbi-title' href="{% url 'productBacklog-detail' project_id PBI.id%}">{{ PBI.title }}</a></td>
 			<td>{{ PBI.status }}</td>
 			<td> to do </td>
 			<td>{{ PBI.ESP }}</td>
 			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
-			<td>edit</td>
-			<td>
-			<form action="http://127.0.0.1:8000/8/product/delete/" method="post">
-				{% csrf_token %}
-				<input type="text" value="{{ PBI.id }}" name="id" hidden/>
-				<button>delete</button>
-			</form>
-			</td>
-
 		</tr>
 		{% endfor %}
 	</table>

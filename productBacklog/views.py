@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from .models import PBIs, Project
 from django.shortcuts import get_object_or_404
 
@@ -32,6 +32,15 @@ class PBDetailView(DetailView):
 	template_name = 'productBacklog/detail.html'
 	context_object_name = 'PBI'
 
+	def get(self, request, pk, fk):
+		self.project_id = fk
+		return super().get(self, request)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project_id'] = self.project_id
+		return context
+
 class PBCreateView(CreateView):
 	model = PBIs
 	# print(form.instance.project_id)
@@ -51,6 +60,20 @@ class PBCreateView(CreateView):
 		form.instance.project = self.project
 		return super().form_valid(form)
 
+class PBDeleteView(DeleteView):
+	model = PBIs
+	template_name = 'productBacklog/delete.html'
+	success_url = '/8/product'
+
+	def get(self, request, pk, fk):
+		self.project_id = fk
+		return super().get(self, request)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project_id'] = self.project_id
+		return context
+
 class projectListView(ListView):
 	model = Project
 	template_name = 'productBacklog/project.html'
@@ -58,7 +81,8 @@ class projectListView(ListView):
 def about(request):
 	return render(request, 'productBacklog/about.html')
 
-def delete(request):
+
+def delete(request, fk):
 	id = request.POST['id']
 	PBIs.objects.get(pk=id).delete()
 	context = {
