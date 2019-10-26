@@ -25,7 +25,8 @@ th, td {
 		{% for PBI in dict %}
 		<tr>
 			<td>{{ PBI.priority }}</td>
-			<td><a class='pbi-title' href="{% url 'productBacklog-detail' PBI.id%}">{{ PBI.title }}</a></td>
+			<!--<td><a class='pbi-title' href="{% url 'productBacklog-detail' PBI.id%}">{{ PBI.title }}</a></td>-->
+			<td>{{ PBI.title }}</td>
 			<td>{{ PBI.status }}</td>
 			<td> to do </td>
 			<td>{{ PBI.ESP }}</td>

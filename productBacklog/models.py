@@ -3,7 +3,7 @@ from django.urls import reverse
 from project.models import Project
 #comment
 class PBIs(models.Model):
-	priority = models.IntegerField()
+	priority = models.IntegerField(unique=True)
 	title = models.CharField(max_length=20)
 	status_choice = [
 		('To Do', 'To Do'),
@@ -20,7 +20,7 @@ class PBIs(models.Model):
 	project_id = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
 
 	def __str__(self):
-		return self.title
+		return self.priority
 
 	def get_absolute_url(self):
 		return reverse('productBacklog-home')

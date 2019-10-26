@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 
 def home(request):
 	context = {
-		'dict': PBIs.objects.all().order_by('priority')
+		'dict': PBIs.objects.all()
 	}
 	return render(request, 'productBacklog/home.html', context)
 
@@ -14,6 +14,7 @@ class PBListView(ListView):
 	model = PBIs
 	template_name = 'productBacklog/home.html'
 	context_object_name = 'dict'
+	ordering = ['priority']
 
 	# def dispatch(self, request, *args, **kwargs):
 	# 	self.project = get_object_or_404(Project)
@@ -46,9 +47,16 @@ class PBCreateView(CreateView):
 
 	def form_valid(self, form):
 		# form.instance.project_id = project.pk
+		"""numOfPBIs = PBIs.objects.all().count() + 1
+		if form.cleaned_data['priority'] > numOfPBIs:
+			form.cleaned_data['priority'] = numOfPBIs
+		print(PBIs.objects.all())
+		if self.object > numOfPBIs:
+			form['priority'] = numOfPBIs"""
 		return super().form_valid(form)
 
 class PBUpdateView(UpdateView):
+	template_name_suffix = "_update_form"
 	model = PBIs
 	# print(form.instance.project_id)
 	fields = [
