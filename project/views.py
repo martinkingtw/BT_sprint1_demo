@@ -21,6 +21,7 @@ class ProjectCreateView(CreateView):
 class ProjectDeleteView(DeleteView):
 	model = Project
 	template_name = 'project/delete.html'
+	slug_url_kwarg = 'project'
 	def get_success_url(self):
 		return '/'
 

@@ -23,4 +23,8 @@ class PBIs(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('productBacklog-home', kwargs={'fk': self.project.pk})
+		return reverse('productBacklog-home', kwargs={'project': self.project.slug})
+
+	def save(self, *args, **kwargs):
+		# adjust priority here
+		super().save(*args, **kwargs)

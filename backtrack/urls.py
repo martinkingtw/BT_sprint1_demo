@@ -18,7 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('<int:fk>/product/', include('productBacklog.urls')),
-    path('<int:fk>/sprint/', include('sprintBacklog.urls')),
+    path('<slug:project>-product/', include('productBacklog.urls')),
+    path('<slug:project>-sprint/', include('sprintBacklog.urls')),
     path('', include('project.urls')),
 ]
