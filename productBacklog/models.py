@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from project.models import Project
 #comment
-class PBIs(models.Model):
+class PBI(models.Model):
 	priority = models.IntegerField()
 	title = models.CharField(max_length=20)
 	status_choice = [

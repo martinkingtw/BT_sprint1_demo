@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PBIs
+from .models import PBI
 # Register your models here.
 
-admin.site.register(PBIs)
+admin.site.register(PBI)
