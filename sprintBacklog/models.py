@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Sprint(models.Model):
 	title = models.CharField(max_length=20, default="Sprint")
+	sprint_number = models.IntegerField(blank=True, null=True)
 	available_effort = models.IntegerField()
 	start_date = models.DateField(default="date.today")
 	duration = models.IntegerField("duration(week)", default=2)
@@ -19,7 +20,13 @@ class Sprint(models.Model):
 
 	def save(self, *args, **kwargs):
 		number_of_sprint = Sprint.objects.filter(project=self.project).count()
-		self.title = "Sprint" + str(number_of_sprint + 1)
+		if self in Sprint.objects.all():
+			number_of_sprint = self.sprint_number			
+		else:
+			number_of_sprint += 1
+		
+		self.title = "Sprint" + str(number_of_sprint)
+		self.sprint_number = number_of_sprint
 		super().save(*args, **kwargs)
 
 from productBacklog.models import PBI
