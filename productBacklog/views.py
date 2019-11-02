@@ -21,9 +21,6 @@ class PBListView(ListView):
 	context_object_name = 'dict'
 	ordering = ['priority']
 
-	def get_queryset(self):
-		return PBI.objects.filter(project=self.project)
-
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
@@ -32,6 +29,27 @@ class PBListView(ListView):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		return context
+
+	def get_queryset(self):
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
+		numOfPBI = len(queryset)
+		index = 0
+		for obj in queryset:
+			if obj.priority == index:
+				obj.priority -= 1
+				obj.save()
+			elif obj.priority > numOfPBI:
+				obj.priority = numOfPBI
+				obj.save()
+			else:
+				index = obj.priority
+		index = 1
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
+		for obj in queryset:
+			obj.priority = index
+			index = index + 1
+			obj.save()
+		return queryset
 
 class PBDetailView(DetailView):
 	model = PBI
@@ -52,7 +70,6 @@ class PBCreateView(CreateView):
 	fields = [
 			'priority',
 			'title',
-			'status',
 			'ESP',
 			'details'
 	]

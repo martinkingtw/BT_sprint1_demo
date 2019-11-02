@@ -14,7 +14,7 @@ class PBI(models.Model):
 	status = models.CharField(
 		max_length = 5,
 		choices = status_choice,
-		default ='To Do',
+		default = 'To Do',
 	)
 	ESP = models.IntegerField("estimated story point")
 	details = models.TextField()
