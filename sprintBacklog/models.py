@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from project.models import Project
-from productBacklog.models import PBI
 from django.contrib.auth.models import User
 
 class Sprint(models.Model):
@@ -21,6 +20,8 @@ class Sprint(models.Model):
 	def save(self, *args, **kwargs):
 		# adjust priority here
 		super().save(*args, **kwargs)
+
+from productBacklog.models import PBI
 
 class Task(models.Model):
 	title = models.CharField(max_length=20, default="Task")

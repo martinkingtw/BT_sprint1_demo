@@ -1,7 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from project.models import Project
-#comment
+from sprintBacklog.models import Sprint
+
 class PBI(models.Model):
 	priority = models.IntegerField()
 	title = models.CharField(max_length=20)
@@ -15,9 +16,10 @@ class PBI(models.Model):
 		choices = status_choice,
 		default ='To Do',
 	)
-	ESP = models.IntegerField()
+	ESP = models.IntegerField("estimated story point")
 	details = models.TextField()
 	project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
+	sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, blank=True, null=True, default=None)
 
 	def __str__(self):
 		return self.title
