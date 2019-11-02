@@ -24,7 +24,7 @@ class Sprint(models.Model):
 			number_of_sprint = self.sprint_number			
 		else:
 			number_of_sprint += 1
-		
+
 		self.title = "Sprint" + str(number_of_sprint)
 		self.sprint_number = number_of_sprint
 		super().save(*args, **kwargs)
