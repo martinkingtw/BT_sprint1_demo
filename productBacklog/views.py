@@ -34,7 +34,7 @@ class PBListView(ListView):
 		return context
 
 	def get_queryset(self):
-		queryset = PBIs.objects.filter(project_id=self.project_id).order_by('priority')
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
 		numOfPBI = len(queryset)
 		index = 0
 		for obj in queryset:
@@ -47,7 +47,7 @@ class PBListView(ListView):
 			else:
 				index = obj.priority
 		index = 1
-		queryset = PBIs.objects.filter(project_id=self.project_id).order_by('priority')
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
 		for obj in queryset:
 			obj.priority = index
 			index = index + 1
