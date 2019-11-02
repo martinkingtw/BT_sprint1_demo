@@ -19,12 +19,15 @@ class Sprint(models.Model):
 		# return reverse('sprint-home', kwargs={'project': self.project.slug, 'sprint': self.pk})
 
 	def save(self, *args, **kwargs):
+		print(Sprint.objects.filter(project=self.project).count())
 		number_of_sprint = Sprint.objects.filter(project=self.project).count()
 		if self in Sprint.objects.all():
-			number_of_sprint = self.sprint_number			
+			number_of_sprint = self.sprint_number
+		elif Sprint.objects.filter(project=self.project).count() == None:
+			number_of_sprint = 1 
 		else:
 			number_of_sprint += 1
-
+		
 		self.title = "Sprint" + str(number_of_sprint)
 		self.sprint_number = number_of_sprint
 		super().save(*args, **kwargs)

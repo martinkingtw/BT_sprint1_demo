@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Sum
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+
 from project.models import Project
 from productBacklog.models import PBI
 from sprintBacklog.models import Sprint, Task
-from django.db.models import Sum
+
 
 from django.views.generic import (
 	ListView, 
@@ -12,13 +16,16 @@ from django.views.generic import (
 	DetailView
 )
 
-def home(request, project):
-	tmp = {"tmp" : 'tmp'}
+def noSprint(request, project):
 	context = {
-		'dict': tmp,
 		'project': Project.objects.get(slug=project)
 	}
-	return render(request, 'SprintBacklog/home.html', context)
+	project = get_object_or_404(Project, slug=project)
+	n = Sprint.objects.filter(project=project).count()
+	if Sprint.objects.filter(project=project).count() != 0:
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': n}))	
+	
+	return render(request, 'SprintBacklog/noSprint.html', context)
 
 class SprintBacklogListView(ListView):
 	model = Sprint
