@@ -21,9 +21,6 @@ class PBListView(ListView):
 	context_object_name = 'dict'
 	ordering = ['priority']
 
-	def get_queryset(self):
-		return PBI.objects.filter(project=self.project)
-
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
