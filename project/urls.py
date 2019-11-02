@@ -9,5 +9,5 @@ from . import views
 urlpatterns = [
     path('', ProjectListView.as_view(), name='project-home'),
     path('create/', ProjectCreateView.as_view(), name='project-create'),
-    path('delete/<int:pk>', ProjectDeleteView.as_view(), name='project-delete'),
+    path('delete/<slug:project>', ProjectDeleteView.as_view(), name='project-delete'),
 ]

@@ -6,26 +6,26 @@ from django.views.generic import (
 	DeleteView,
 	UpdateView,
 	)
-from .models import PBIs, Project
+from .models import PBI, Project
 from django.shortcuts import get_object_or_404
 
-def home(request):
-	context = {
-		'dict': PBIs.objects.all().order_by('priority')
-	}
-	return render(request, 'productBacklog/home.html', context)
+# def home(request):
+# 	context = {
+# 		'dict': PBI.objects.all().order_by('priority')
+# 	}
+# 	return render(request, 'productBacklog/home.html', context)
 
 class PBListView(ListView):
-	model = PBIs
+	model = PBI
 	template_name = 'productBacklog/home.html'
 	context_object_name = 'dict'
 	ordering = ['priority']
-	"""def get_queryset(self):
-		return PBIs.objects.filter(project_id=self.project_id)"""
+
+	def get_queryset(self):
+		return PBI.objects.filter(project=self.project)
 
 	def dispatch(self, request, *args, **kwargs):
-		self.project_id = kwargs['fk']
-		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -55,13 +55,12 @@ class PBListView(ListView):
 		return queryset
 
 class PBDetailView(DetailView):
-	model = PBIs
+	model = PBI
 	template_name = 'productBacklog/detail.html'
 	context_object_name = 'PBI'
 
 	def dispatch(self, request, *args, **kwargs):
-		self.project_id = kwargs['fk']
-		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -70,17 +69,16 @@ class PBDetailView(DetailView):
 		return context
 
 class PBCreateView(CreateView):
-	model = PBIs
-	# print(form.instance.project_id)
+	model = PBI
 	fields = [
 			'priority',
 			'title',
 			'ESP',
 			'details'
 	]
+
 	def dispatch(self, request, *args, **kwargs):
-		self.project_id = kwargs['fk']
-		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -93,8 +91,7 @@ class PBCreateView(CreateView):
 		return super().form_valid(form)
 
 class PBUpdateView(UpdateView):
-	model = PBIs
-	# print(form.instance.project_id)
+	model = PBI
 	fields = [
 			'priority',
 			'title',
@@ -102,9 +99,9 @@ class PBUpdateView(UpdateView):
 			'ESP',
 			'details'
 	]
+
 	def dispatch(self, request, *args, **kwargs):
-		self.project_id = kwargs['fk']
-		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -114,14 +111,13 @@ class PBUpdateView(UpdateView):
 
 
 class PBDeleteView(DeleteView):
-	model = PBIs
+	model = PBI
 	template_name = 'productBacklog/delete.html'
 	def get_success_url(self):
-		return '/' + str(self.project_id) + '/product'
+		return '/' + str(self.project.slug) + '/product'
 
 	def dispatch(self, request, *args, **kwargs):
-		self.project_id = kwargs['fk']
-		self.project = get_object_or_404(Project, pk=kwargs['fk'])
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -139,9 +135,9 @@ def about(request):
 
 def delete(request, fk):
 	id = request.POST['id']
-	PBIs.objects.get(pk=id).delete()
+	PBI.objects.get(pk=id).delete()
 	context = {
-		'dict': PBIs.objects.all().order_by('priority')
+		'dict': PBI.objects.all().order_by('priority')
 	}
 	return render(request, 'productBacklog/home.html', context)
 

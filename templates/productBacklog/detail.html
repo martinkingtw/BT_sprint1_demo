@@ -27,8 +27,8 @@ th, td {
 			<td> to do </td>
 			<td>{{ PBI.ESP }}</td>
 			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
-			<td><a class= "btn btn-outline-info" href="{% url 'productBacklog-update' project.pk PBI.id%}">edit</a></td>
-			<td><a class="btn btn-outline-danger" href="{% url 'productBacklog-delete' project.pk PBI.id%}">delete</a></td>
+			<td><a class= "btn btn-outline-info" href="{% url 'productBacklog-update' project.slug PBI.pk%}">edit</a></td>
+			<td><a class="btn btn-outline-danger" href="{% url 'productBacklog-delete' project.slug PBI.pk%}">delete</a></td>
 		</tr>
 
 	</table>

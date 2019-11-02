@@ -9,7 +9,7 @@ th, td {
 
 </style>
 	<h1>PRODUCT BACKLOG - {{ project.title }}</h1>
-	<button class="btn btn-outline-info"><a href="{% url 'productBacklog-create' project.pk%}">Create New Item</a></button>
+	<a href="{% url 'productBacklog-create' project.slug%}" class="btn btn-outline-info">Create New Item</a>
 
 	<table style="width: 100%">
 		<tr>
@@ -23,7 +23,7 @@ th, td {
 		{% for PBI in dict %}
 		<tr>
 			<td>{{ PBI.priority }}</td>
-			<td><a class='pbi-title' href="{% url 'productBacklog-detail' project.pk PBI.id%}">{{ PBI.title }}</a></td>
+			<td><a class='pbi-title' href="{% url 'productBacklog-detail' project.slug PBI.pk%}">{{ PBI.title }}</a></td>
 			<td>{{ PBI.status }}</td>
 			<td> to do </td>
 			<td>{{ PBI.ESP }}</td>

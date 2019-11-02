@@ -2,9 +2,9 @@
 {% block content %}
 <h1>ALL PROJECTS</h1>
 {% for project in projects %}
-	<h2><a href="{% url 'productBacklog-home' project.pk %}">{{ project.title }}</a></h2>
+	<h2><a href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
 	<p align="justify">{{ project.details }}</p>
-	<a class="btn btn-outline-danger" href="{% url 'project-delete' project.pk %}">Delete project</a>
+	<a class="btn btn-outline-danger" href="{% url 'project-delete' project.slug %}">Delete project</a>
 	<br/>
 	<br/>
 {% endfor %}

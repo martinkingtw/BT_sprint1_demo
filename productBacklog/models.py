@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from project.models import Project
 #comment
-class PBIs(models.Model):
+class PBI(models.Model):
 	priority = models.IntegerField()
 	title = models.CharField(max_length=20)
 	status_choice = [
@@ -23,4 +23,8 @@ class PBIs(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('productBacklog-home', kwargs={'fk': self.project.pk})
+		return reverse('productBacklog-home', kwargs={'project': self.project.slug})
+
+	def save(self, *args, **kwargs):
+		# adjust priority here
+		super().save(*args, **kwargs)
