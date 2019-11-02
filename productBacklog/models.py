@@ -13,7 +13,7 @@ class PBIs(models.Model):
 	status = models.CharField(
 		max_length = 5,
 		choices = status_choice,
-		default ='To Do',
+		default = 'To Do',
 	)
 	ESP = models.IntegerField()
 	details = models.TextField()
