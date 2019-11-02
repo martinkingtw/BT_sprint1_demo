@@ -18,7 +18,8 @@ class Sprint(models.Model):
 		# return reverse('sprint-home', kwargs={'project': self.project.slug, 'sprint': self.pk})
 
 	def save(self, *args, **kwargs):
-		# adjust priority here
+		number_of_sprint = Sprint.objects.filter(project=self.project).count()
+		self.title = "Sprint" + str(number_of_sprint + 1)
 		super().save(*args, **kwargs)
 
 from productBacklog.models import PBI
