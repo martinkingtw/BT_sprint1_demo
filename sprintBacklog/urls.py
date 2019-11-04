@@ -3,6 +3,7 @@ from .views import (
 	SprintBacklogListView,
     SprintBacklogCreateView,
     SprintBacklogDetailView,
+    SprintBacklogDeleteView,
 	)
 	# SprintBacklogDeleteView,
 	# SprintBacklogUpdateView
@@ -14,4 +15,5 @@ urlpatterns = [
     path('noSprint/', views.noSprint ,name='no-sprint'),
     path('create/', SprintBacklogCreateView.as_view(), name='sprintBacklog-create'),
     path('<int:pk>-detail/', SprintBacklogDetailView.as_view(), name='sprintBacklog-detail'),
+    path('<int:pk>-delete/', SprintBacklogDeleteView.as_view(), name='sprintBacklog-delete'),
 ]

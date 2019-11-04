@@ -10,7 +10,7 @@ th, td {
 	<h2>SPRINT BACKLOG DETAIL</h2>
     <table>
     <td><a class= "btn btn-outline-info" href="#">edit</a></td>
-    <td><a class="btn btn-outline-danger" href="#">delete</a></td>
+    <td><a class="btn btn-outline-danger" href="{% url 'sprintBacklog-delete' project.slug sprint.pk %}">delete</a></td>
     </table>
 	<table style="width: 100%">
 		<tr>

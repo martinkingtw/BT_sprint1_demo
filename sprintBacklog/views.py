@@ -33,6 +33,12 @@ class SprintBacklogListView(ListView):
 	context_object_name = 'sprint'
 
 	def get_queryset(self):
+		queryset = Sprint.objects.filter(project_id=self.project).order_by('pk')
+		index = 1
+		for s in queryset:
+			s.title = "Sprint" + str(index)
+			s.save()
+			index += 1
 		return self.sprint
 
 	# get arg from url
@@ -132,6 +138,29 @@ class SprintBacklogDetailView(DetailView):
 
 		return context
 
+class SprintBacklogDeleteView(DeleteView):
+	model = Sprint
+	template_name = 'sprintBacklog/delete.html'
+
+	def get_success_url(self):
+		all_sprint = Sprint.objects.filter(project=self.project).order_by('-pk')
+		number_of_sprint = all_sprint.count()
+		if number_of_sprint == 1:
+			return '/' + str(self.project.slug) + '-sprint_noSprint'
+		elif all_sprint.first().pk != self.sprint.pk:
+			return '/' + str(self.project.slug) + '-sprint_' + str(all_sprint.first().pk)
+		else:
+			return '/' + str(self.project.slug) + '-sprint_' + str(all_sprint[1].pk)
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.sprint = Sprint.objects.get(pk=kwargs['pk'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
 
 
 
