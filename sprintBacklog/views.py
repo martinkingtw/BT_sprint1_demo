@@ -162,6 +162,22 @@ class SprintBacklogDeleteView(DeleteView):
 		context['project'] = self.project
 		return context
 
+class SprintBacklogUpdateView(UpdateView):
+	model = Sprint
+	fields = [
+		"available_effort",
+		"duration",
+		"details",
+	]
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
 
 
 

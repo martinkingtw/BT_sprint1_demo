@@ -4,10 +4,8 @@ from .views import (
     SprintBacklogCreateView,
     SprintBacklogDetailView,
     SprintBacklogDeleteView,
+    SprintBacklogUpdateView,
 	)
-	# SprintBacklogDeleteView,
-	# SprintBacklogUpdateView
-# )
 from . import views
 
 urlpatterns = [
@@ -16,4 +14,5 @@ urlpatterns = [
     path('create/', SprintBacklogCreateView.as_view(), name='sprintBacklog-create'),
     path('<int:pk>-detail/', SprintBacklogDetailView.as_view(), name='sprintBacklog-detail'),
     path('<int:pk>-delete/', SprintBacklogDeleteView.as_view(), name='sprintBacklog-delete'),
+    path('<int:pk>-edit', SprintBacklogUpdateView.as_view(), name='sprintBacklog-edit'),
 ]
