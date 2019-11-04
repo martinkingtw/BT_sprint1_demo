@@ -15,7 +15,9 @@
 		<li class="nav-item">
 			<div class="btn-group" role="group" aria-label="Basic example">
 			<a class="btn btn-outline-info" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
-			<a class="btn btn-outline-secondary" href="#">Include PBI</a>
+				{% if PBI.all %}
+				<a class="btn btn-outline-secondary" href="{% url 'sprintBacklog-include' project.slug sprint.pk%}">Include PBI</a>
+				{% endif %}
 			</div>	
 		</li>
 	</ul>

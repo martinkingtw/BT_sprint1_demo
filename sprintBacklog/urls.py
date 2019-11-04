@@ -5,6 +5,7 @@ from .views import (
     SprintBacklogDetailView,
     SprintBacklogDeleteView,
     SprintBacklogUpdateView,
+    IncludePBIUpdateView,
 	)
 from . import views
 
@@ -15,4 +16,5 @@ urlpatterns = [
     path('<int:pk>-detail/', SprintBacklogDetailView.as_view(), name='sprintBacklog-detail'),
     path('<int:pk>-delete/', SprintBacklogDeleteView.as_view(), name='sprintBacklog-delete'),
     path('<int:pk>-edit', SprintBacklogUpdateView.as_view(), name='sprintBacklog-edit'),
+    path('<int:pk>-include', IncludePBIUpdateView.as_view(), name='sprintBacklog-include'),
 ]
