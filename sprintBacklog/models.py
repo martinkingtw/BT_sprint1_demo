@@ -20,11 +20,12 @@ class Sprint(models.Model):
 	def save(self, *args, **kwargs):
 		number_of_sprint = Sprint.objects.filter(project=self.project).count()
 		if Sprint.objects.filter(project=self.project).count() == None:
-			number_of_sprint = 1 
+			number_of_sprint = 1
 		else:
 			number_of_sprint += 1
-		
-		self.title = "Sprint" + str(number_of_sprint)
+
+		if self not in Sprint.objects.filter(project=self.project):
+			self.title = "Sprint" + str(number_of_sprint)
 		super().save(*args, **kwargs)
 
 from productBacklog.models import PBI
