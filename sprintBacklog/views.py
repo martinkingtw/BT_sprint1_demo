@@ -101,15 +101,35 @@ class SprintBacklogCreateView(CreateView):
 class SprintBacklogDetailView(DetailView):
 	model = Sprint
 	template_name = 'sprintBacklog/detail.html'
-	context_object_name = 'PBI'
+	context_object_name = 'sprint'
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.sprint = Sprint.objects.get(pk=kwargs['pk'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
+
+		task = []
+		for p in PBI.objects.filter(sprint=self.sprint):
+			todo = Task.objects.filter(sprint=self.sprint).filter(status='To Do').filter(PBI=p)
+			doing = Task.objects.filter(sprint=self.sprint).filter(status='Doing').filter(PBI=p)
+			done = Task.objects.filter(sprint=self.sprint).filter(status='Done').filter(PBI=p)
+			todoE = todo.aggregate(Sum('effort')).get('effort__sum') if todo else 0
+			doingE = doing.aggregate(Sum('effort')).get('effort__sum') if doing else 0
+			doneE = done.aggregate(Sum('effort')).get('effort__sum') if done else 0
+			tmp = {"pbi": p,
+				   "todo": todo,
+				   "doing": doing,
+				   "done": done,
+				   "finish": doneE,
+				   "not_finish": doingE + todoE + doneE
+				   }
+			task.append(tmp)
+		context['task'] = task
+
 		return context
 
 

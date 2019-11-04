@@ -6,7 +6,7 @@
 		{% for s in all_sprint %}
 		<li class="nav-item">
 			{% if s.pk == sprint.pk %}
-				<a class="nav-link active" href="#">{{ s.title }}</a>
+				<a class="nav-link active" href="{% url 'sprintBacklog-detail' project.slug s.pk %}">{{ s.title }}</a>
 			{% else %}
 				<a class="nav-link" href="{% url 'sprint-home' project.slug s.pk %}">{{ s.title }}</a>
 			{% endif %}
