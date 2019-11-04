@@ -21,9 +21,9 @@ def noSprint(request, project):
 		'project': Project.objects.get(slug=project)
 	}
 	project = get_object_or_404(Project, slug=project)
-	n = Sprint.objects.filter(project=project).count()
 	if Sprint.objects.filter(project=project).count() != 0:
-		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': n}))	
+		n = Sprint.objects.filter(project=project).order_by('pk').last().pk
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': n}))
 	
 	return render(request, 'SprintBacklog/noSprint.html', context)
 
