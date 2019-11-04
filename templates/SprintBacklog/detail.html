@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+th, td {
+	padding: 10px;
+	text-align: center;
+}
+
+</style>
+	<h2>SPRINT BACKLOG DETAIL</h2>
+	<table style="width: 100%">
+		<tr>
+			<th>ID</th>
+    		<th>Title</th>
+    		<th>Status</th>
+    		<th>Sprint <br/> number</th>
+    		<th>Estimated<br/>story point</th>
+    		<th>Detail</th>
+    		<th></th>
+    		<th></th>
+    	</tr>
+		
+		<tr>
+			<td>{{ PBI.id }}</td>
+			<td class='pbi-title'>{{ PBI.title }}</td>
+			<td>{{ PBI.status }}</td>
+			<td> to do </td>
+			<td>{{ PBI.ESP }}</td>
+			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
+			<td><a class= "btn btn-outline-info" href="{% url 'productBacklog-update' project.slug PBI.pk%}">edit</a></td>
+			<td><a class="btn btn-outline-danger" href="{% url 'productBacklog-delete' project.slug PBI.pk%}">delete</a></td>
+		</tr>
+
+	</table>
+{% endblock content %}

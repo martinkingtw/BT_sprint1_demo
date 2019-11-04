@@ -38,7 +38,6 @@ class SprintBacklogListView(ListView):
 	# get arg from url
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
-		print(kwargs)
 		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
 		return super().dispatch(request, *args, **kwargs)
 
@@ -46,7 +45,7 @@ class SprintBacklogListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
-		context['all_sprint'] = Sprint.objects.filter(project=self.project).order_by('sprint_number')
+		context['all_sprint'] = Sprint.objects.filter(project=self.project).order_by('pk')
 		
 		task = []
 		total = 0
@@ -98,6 +97,20 @@ class SprintBacklogCreateView(CreateView):
 	def form_valid(self, form):
 		form.instance.project = self.project
 		return super().form_valid(form)
+
+class SprintBacklogDetailView(DetailView):
+	model = Sprint
+	template_name = 'sprintBacklog/detail.html'
+	context_object_name = 'PBI'
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
 
 
 

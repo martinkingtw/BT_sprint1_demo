@@ -5,7 +5,7 @@
 	<ul class="nav nav-tabs" align="right">
 		{% for s in all_sprint %}
 		<li class="nav-item">
-			{% if s.sprint_number == sprint.sprint_number %}
+			{% if s.pk == sprint.pk %}
 				<a class="nav-link active" href="#">{{ s.title }}</a>
 			{% else %}
 				<a class="nav-link" href="{% url 'sprint-home' project.slug s.pk %}">{{ s.title }}</a>
