@@ -8,13 +8,13 @@
 			{% if s.sprint_number == sprint.sprint_number %}
 				<a class="nav-link active" href="#">{{ s.title }}</a>
 			{% else %}
-				<a class="nav-link" href="{% url 'sprint-home' project.slug s.sprint_number %}">{{ s.title }}</a>
+				<a class="nav-link" href="{% url 'sprint-home' project.slug s.pk %}">{{ s.title }}</a>
 			{% endif %}
 		</li>
 		{% endfor %}
 		<li class="nav-item">
 			<div class="btn-group" role="group" aria-label="Basic example">
-			<a class="btn btn-outline-secondary" href="#">New Sprint</a>
+			<a class="btn btn-outline-info" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
 			<a class="btn btn-outline-secondary" href="#">Include PBI</a>
 			</div>	
 		</li>

@@ -7,7 +7,7 @@ class Sprint(models.Model):
 	title = models.CharField(max_length=20, default="Sprint")
 	sprint_number = models.IntegerField(blank=True, null=True)
 	available_effort = models.IntegerField()
-	start_date = models.DateField(default="date.today")
+	start_date = models.DateField(auto_now=True)
 	duration = models.IntegerField("duration(week)", default=2)
 	details = models.TextField(null=True)
 	project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
@@ -15,11 +15,10 @@ class Sprint(models.Model):
 	def __str__(self):
 		return self.title
 
-	# def get_absolute_url(self):
-		# return reverse('sprint-home', kwargs={'project': self.project.slug, 'sprint': self.pk})
+	def get_absolute_url(self):
+		return reverse('sprint-home', kwargs={'project': self.project.slug, 'sprint': self.pk})
 
 	def save(self, *args, **kwargs):
-		print(Sprint.objects.filter(project=self.project).count())
 		number_of_sprint = Sprint.objects.filter(project=self.project).count()
 		if self in Sprint.objects.all():
 			number_of_sprint = self.sprint_number

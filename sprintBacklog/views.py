@@ -38,7 +38,8 @@ class SprintBacklogListView(ListView):
 	# get arg from url
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
-		self.sprint = Sprint.objects.filter(sprint_number=kwargs['sprint']).get(project=self.project)
+		print(kwargs)
+		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
 		return super().dispatch(request, *args, **kwargs)
 
 	# pass different queries to html
@@ -76,6 +77,27 @@ class SprintBacklogListView(ListView):
 		context['stat'] = stat
 		context['task'] = task
 		return context
+
+class SprintBacklogCreateView(CreateView):
+	model = Sprint
+	fields = [
+		"available_effort",
+		"duration",
+		"details",
+	]
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
+
+	def form_valid(self, form):
+		form.instance.project = self.project
+		return super().form_valid(form)
 
 
 
