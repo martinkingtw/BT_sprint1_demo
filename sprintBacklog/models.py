@@ -51,8 +51,8 @@ class Task(models.Model):
 	def __str__(self):
 		return self.title
 
-	# def get_absolute_url(self):
-		# return reverse('sprint-home', kwargs={'project': self.project.slug, 'sprint': self.pk})
+	def get_absolute_url(self):
+		return reverse('sprint-home', kwargs={'project': self.sprint.project.slug, 'sprint': self.sprint.pk})
 
 	def save(self, *args, **kwargs):
 		# adjust priority here

@@ -78,7 +78,7 @@
 					<a href="#"><h3 class="card-title">{{ t.pbi.title }}</h3></a>
 					</br>
 					<h5 class="card-text mt-auto" style="text-align: right">{{ t.finish }}/{{ t.not_finish }} hrs</h5>
-					<a href="#" class="btn btn-outline-info btn-sm mt-auto">New Task</a>
+					<a href="{% url 'task-create' project.slug t.pbi.sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto">New Task</a>
 				</div>
 			</div>
 

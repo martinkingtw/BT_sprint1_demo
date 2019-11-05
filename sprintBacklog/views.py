@@ -218,3 +218,28 @@ class IncludePBIUpdateView(UpdateView):
 		self.PBI.status = 'Doing'
 		self.PBI.save()
 		return super(IncludePBIUpdateView, self).post(request)
+
+class TaskCreateView(CreateView):
+	model = Task
+	fields = [
+		'title',
+		'effort',
+		'details',
+	]
+	template_name = 'sprintBacklog/task_form.html'
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
+		self.PBI = PBI.objects.get(pk=kwargs['PBI'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['PBI'] = self.PBI
+		return context
+
+	def form_valid(self, form):
+		form.instance.sprint = self.sprint
+		form.instance.PBI = self.PBI
+		return super(TaskCreateView, self).form_valid(form)
