@@ -23,7 +23,7 @@ def noSprint(request, project):
 	project = get_object_or_404(Project, slug=project)
 	if Sprint.objects.filter(project=project).count() != 0:
 		n = Sprint.objects.filter(project=project).order_by('pk').last().pk
-		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': n}))
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project.slug, 'sprint': n}))
 	
 	return render(request, 'SprintBacklog/noSprint.html', context)
 
@@ -118,6 +118,7 @@ class SprintBacklogDetailView(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
+		context['sprint'] = self.sprint
 
 		task = []
 		for p in PBI.objects.filter(sprint=self.sprint):
@@ -214,7 +215,7 @@ class IncludePBIUpdateView(UpdateView):
 		return context
 
 	def post(self, request, *args, **kwargs):
-		self.PBI.sprint = self.sprint
+		self.PBI.sprint.add(self.sprint)
 		self.PBI.status = 'Doing'
 		self.PBI.save()
 		return super(IncludePBIUpdateView, self).post(request)
@@ -256,7 +257,7 @@ def selectPBI(request, project, pk):
 		for id in request.POST.getlist('PBIs'):
 			print(id)
 			selectedPBI = PBI.objects.get(pk=id)
-			selectedPBI.sprint = Sprint.objects.get(pk=pk)
+			selectedPBI.sprint.add(Sprint.objects.get(pk=pk))
 			selectedPBI.status = 'Doing'
 			selectedPBI.save()
 		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))

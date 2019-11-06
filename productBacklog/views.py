@@ -93,7 +93,8 @@ class PBUpdateView(UpdateView):
 			'priority',
 			'title',
 			'ESP',
-			'details'
+			'details',
+			'status'
 	]
 
 	def dispatch(self, request, *args, **kwargs):
