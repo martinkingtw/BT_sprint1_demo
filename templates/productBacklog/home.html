@@ -25,7 +25,7 @@ td, th {
 			{% for i in PBIs %}
 			<tr>
 				<td>{{ i.pbi.priority }}</td>
-				<td><a class='pbi-title' href="{% url 'productBacklog-detail' project.slug i.pbi.pk%}">{{ i.pbi.title }}</a></td>
+				<td><a class="pbi-title" data-toggle="tooltip" data-placement="top" title="edit/delete" href="{% url 'productBacklog-detail' project.slug i.pbi.pk%}">{{ i.pbi.title }}</a></td>
 				<td>{{ i.pbi.status }}</td>
 				<td>{{ i.sprint_number }}</td>
 				<td>{{ i.pbi.ESP }}</td>
