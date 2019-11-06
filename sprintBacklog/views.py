@@ -224,6 +224,7 @@ class TaskCreateView(CreateView):
 	fields = [
 		'title',
 		'effort',
+		'task_owner',
 		'details',
 	]
 	template_name = 'sprintBacklog/task_form.html'
