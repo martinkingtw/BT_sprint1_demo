@@ -2,8 +2,20 @@
 {% block content %}
 
 <h1>Sprint</h1>
-<form method="POST"> {% csrf_token %}
-	{{ form.as_p }}
-	<button class="btn btn-outline-info" type="submit">Save</button>
-</form>
+<div class="card w-50" >
+	<div class="card-body">
+	<form method="POST">
+	    {% csrf_token %}
+	    {% for f in form %}
+	    <div class="col">
+	    	{{ f.label_tag }}
+	    	<br>
+			{{ f }}
+		</div>
+		<br>
+		{% endfor %}
+		<button class="btn btn-outline-info" type="submit">Save</button>
+	</form>
+	</div>
+</div>
 {% endblock content %}
