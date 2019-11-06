@@ -181,45 +181,6 @@ class SprintBacklogUpdateView(UpdateView):
 		context['project'] = self.project
 		return context
 
-class IncludePBIUpdateView(UpdateView):
-	model = PBI
-	fields = [
-
-	]
-	template_name = 'sprintBacklog/includePBI.html'
-
-	def get_object(self, queryset=None):
-		return self.PBI
-
-	def get_initial(self):
-		initial = super(IncludePBIUpdateView, self).get_initial()
-		initial['priority'] = self.PBI.priority
-		initial['title'] = self.PBI.title
-		initial['ESP'] = self.PBI.ESP
-		initial['details'] = self.PBI.details
-		initial['project'] = self.PBI.project
-		initial['sprint'] = self.PBI.sprint
-		return initial
-
-	def dispatch(self, request, *args, **kwargs):
-		self.project = get_object_or_404(Project, slug=kwargs['project'])
-		self.sprint = Sprint.objects.get(pk=kwargs['pk'])
-		self.PBI = PBI.objects.filter(project=self.project, status='To Do').order_by('priority').first()
-		return super().dispatch(request, *args, **kwargs)
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['PBI'] = self.PBI
-		context['project'] = self.project
-		context['sprint'] = self.sprint
-		return context
-
-	def post(self, request, *args, **kwargs):
-		self.PBI.sprint.add(self.sprint)
-		self.PBI.status = 'Doing'
-		self.PBI.save()
-		return super(IncludePBIUpdateView, self).post(request)
-
 class TaskCreateView(CreateView):
 	model = Task
 	fields = [
