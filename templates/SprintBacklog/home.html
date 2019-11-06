@@ -16,7 +16,7 @@
 			<div class="btn-group" role="group" aria-label="Basic example">
 				<a class="btn btn-outline-info" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
 				<a class="btn btn-outline-secondary" href="{% url 'sprintBacklog-select' project.slug sprint.pk%}">Select PBI</a>
-			</div>	
+			</div>
 		</li>
 	</ul>
 	</br>
@@ -76,7 +76,7 @@
 					<a href="#"><h3 class="card-title">{{ t.pbi.title }}</h3></a>
 					</br>
 					<h5 class="card-text mt-auto" style="text-align: right">{{ t.finish }}/{{ t.not_finish }} hrs</h5>
-					<a href="{% url 'task-create' project.slug t.pbi.sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto">New Task</a>
+					<a href="{% url 'task-create' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto">New Task</a>
 				</div>
 			</div>
 

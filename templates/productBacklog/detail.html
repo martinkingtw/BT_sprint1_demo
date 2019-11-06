@@ -1,35 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<style>
-th, td {
-	padding: 10px;
-	text-align: center;
-}
+	<h1>PRODUCT BACKLOG ITEM DETAIL</h1>
+	<br>
+	<div class="card w-50">
+		<div class="card-body">
+    		<h2 class="card-title">{{ PBI.pbi.title }}</h2>
+			<h5 class="card-subtitle text-muted">{{ PBI.pbi.status }}</h5>
+			<br>
 
-</style>
-	<h2>PRODUCT BACKLOG DETAIL</h2>
-	<table style="width: 100%">
-		<tr>
-			<th>ID</th>
-    		<th>Title</th>
-    		<th>Status</th>
-    		<th>Sprint <br/> number</th>
-    		<th>Estimated<br/>story point</th>
-    		<th>Detail</th>
-    		<th></th>
-    		<th></th>
-    	</tr>
-		
-		<tr>
-			<td>{{ PBI.id }}</td>
-			<td class='pbi-title'>{{ PBI.title }}</td>
-			<td>{{ PBI.status }}</td>
-			<td> to do </td>
-			<td>{{ PBI.ESP }}</td>
-			<td width="35%"; style="text-align: justify;">{{ PBI.details }}</td>
-			<td><a class= "btn btn-outline-info" href="{% url 'productBacklog-update' project.slug PBI.pk%}">edit</a></td>
-			<td><a class="btn btn-outline-danger" href="{% url 'productBacklog-delete' project.slug PBI.pk%}">delete</a></td>
-		</tr>
+    		<h6>Sprint number</h6>
+			<p>{{ PBI.sprint_number }}</p>
+			<br>
 
-	</table>
+    		<h6>Estimated story point</h6>
+			<p>{{ PBI.pbi.ESP }}</p>
+			<br>
+
+    		<h6>Detail</h6>
+			<p style="text-align: justify;">{{ PBI.pbi.details }}</p>
+
+			<div class="toolbar">
+				<a class= "btn btn-outline-info" href="{% url 'productBacklog-update' project.slug PBI.pbi.pk%}">Edit</a>
+				<a class="btn btn-outline-danger" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
+			</div>
+		</div>
+	</div>
 {% endblock content %}

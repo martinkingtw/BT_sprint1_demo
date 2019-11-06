@@ -18,8 +18,6 @@ from django.shortcuts import get_object_or_404
 class PBListView(ListView):
 	model = PBI
 	template_name = 'productBacklog/home.html'
-	context_object_name = 'dict'
-	ordering = ['priority']
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
@@ -28,6 +26,19 @@ class PBListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
+		PBIs = []
+		for pbi in PBI.objects.filter(project_id=self.project).order_by('priority'):
+			n = ''
+			for i in pbi.sprint.all():
+				n += i.title[-1]
+				n += ", "
+			if n == "":
+				n = "N/A.."
+			tmp = {"pbi": pbi,
+				   "sprint_number": n[:-2]
+				   }
+			PBIs.append(tmp)
+		context['PBIs'] = PBIs
 		return context
 
 	def get_queryset(self):
@@ -54,15 +65,25 @@ class PBListView(ListView):
 class PBDetailView(DetailView):
 	model = PBI
 	template_name = 'productBacklog/detail.html'
-	context_object_name = 'PBI'
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.pbi = get_object_or_404(PBI, pk=kwargs['pk'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
+		n = ''
+		for i in self.pbi.sprint.all():
+			n += i.title[-1]
+			n += ", "
+		if n == "":
+			n = "N/A.."
+		tmp = {"pbi": self.pbi,
+			   "sprint_number": n[:-2]
+			   }
+		context['PBI'] = tmp
 		return context
 
 class PBCreateView(CreateView):
@@ -93,7 +114,8 @@ class PBUpdateView(UpdateView):
 			'priority',
 			'title',
 			'ESP',
-			'details'
+			'details',
+			'status'
 	]
 
 	def dispatch(self, request, *args, **kwargs):

@@ -2,14 +2,18 @@
 {% block content %}
 
 <h1>Select PBI</h1>
+    
 <form method="POST">
-    {% csrf_token %}
-    <select name="PBIs" multiple>
+    <div class="form-group w-50">
+	{% csrf_token %}
+    <select name="PBIs" class="form-control" id="SelectPBI" multiple>
         {% for p in PBI %}
             <option value= {{ p.pk }} >{{ p.title }}</option>
         {% endfor %}
     </select>
-    <button class="btn btn-outline-info" type="submit">Submit</button>
-    <a class="btn btn-outline-info" href="{% url 'sprint-home' project.slug sprint.pk%}">Cancel</a>
+	<p class="text-muted">Hold down "Control", or "Command" on a Mac, to select more than one.</p>
+  	</div>
+    <button class="btn btn-outline-info" type="submit">Select</button>
+    <a class="btn btn-outline-secondary" href="{% url 'sprint-home' project.slug sprint.pk%}">Cancel</a>
 </form>
 {% endblock content %}
