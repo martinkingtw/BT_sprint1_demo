@@ -1,0 +1,15 @@
+{% extends "base_noSidebar.html" %}
+{% block content %}
+
+<h1>Select PBI</h1>
+<form method="POST">
+    {% csrf_token %}
+    <select name="PBIs" multiple>
+        {% for p in PBI %}
+            <option value= {{ p.pk }} >{{ p.title }}</option>
+        {% endfor %}
+    </select>
+    <button class="btn btn-outline-info" type="submit">Submit</button>
+    <a class="btn btn-outline-info" href="{% url 'sprint-home' project.slug sprint.pk%}">Cancel</a>
+</form>
+{% endblock content %}

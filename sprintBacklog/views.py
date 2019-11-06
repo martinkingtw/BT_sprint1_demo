@@ -243,3 +243,20 @@ class TaskCreateView(CreateView):
 		form.instance.sprint = self.sprint
 		form.instance.PBI = self.PBI
 		return super(TaskCreateView, self).form_valid(form)
+
+def selectPBI(request, project, pk):
+	context = {
+		'project': Project.objects.get(slug=project),
+		'sprint': Sprint.objects.get(pk=pk),
+		'PBI': PBI.objects.filter(project=Project.objects.get(slug=project), status='To Do'),
+	}
+	if request.POST:
+		print(request.POST.getlist('PBIs'))
+		for id in request.POST.getlist('PBIs'):
+			print(id)
+			selectedPBI = PBI.objects.get(pk=id)
+			selectedPBI.sprint = Sprint.objects.get(pk=pk)
+			selectedPBI.status = 'Doing'
+			selectedPBI.save()
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
+	return render(request, 'sprintBacklog/selectPBI.html', context)

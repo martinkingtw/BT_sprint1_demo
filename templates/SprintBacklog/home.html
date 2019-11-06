@@ -17,6 +17,7 @@
 			<a class="btn btn-outline-info" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
 				{% if PBI.all %}
 				<a class="btn btn-outline-secondary" href="{% url 'sprintBacklog-include' project.slug sprint.pk%}">Include PBI</a>
+				<a class="btn btn-outline-secondary" href="{% url 'sprintBacklog-select' project.slug sprint.pk%}">Select PBI</a>
 				{% endif %}
 			</div>	
 		</li>

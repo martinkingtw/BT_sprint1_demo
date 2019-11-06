@@ -92,7 +92,6 @@ class PBUpdateView(UpdateView):
 	fields = [
 			'priority',
 			'title',
-			'status',
 			'ESP',
 			'details'
 	]
@@ -130,7 +129,7 @@ def about(request):
 	return render(request, 'productBacklog/about.html')
 
 
-def delete(request, fk):
+def delete(request):
 	id = request.POST['id']
 	PBI.objects.get(pk=id).delete()
 	context = {

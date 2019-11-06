@@ -18,5 +18,6 @@ urlpatterns = [
     path('<int:pk>-delete/', SprintBacklogDeleteView.as_view(), name='sprintBacklog-delete'),
     path('<int:pk>-edit/', SprintBacklogUpdateView.as_view(), name='sprintBacklog-edit'),
     path('<int:pk>-include/', IncludePBIUpdateView.as_view(), name='sprintBacklog-include'),
-    path('<int:sprint>/<int:PBI>/task-create/', TaskCreateView.as_view(), name='task-create')
+    path('<int:sprint>/<int:PBI>-create/', TaskCreateView.as_view(), name='task-create'),
+    path('<int:pk>-select/', views.selectPBI, name='sprintBacklog-select'),
 ]
