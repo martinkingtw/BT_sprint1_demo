@@ -28,6 +28,19 @@ class PBListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
+		PBIs = []
+		for pbi in PBI.objects.filter(project_id=self.project).order_by('priority'):
+			n = ''
+			for i in pbi.sprint.all():
+				n += i.title[-1]
+				n += ", "
+			tmp = {"pbi": pbi,
+				   "sprint_number": n[:-2]
+				   }
+			PBIs.append(tmp)
+		context['PBIs'] = PBIs
+		# for pbi in PBI.objects.all():
+		# 	print(pbi.sprint.all())
 		return context
 
 	def get_queryset(self):
