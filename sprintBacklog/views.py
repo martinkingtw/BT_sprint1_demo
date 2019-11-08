@@ -208,6 +208,63 @@ class TaskCreateView(CreateView):
 		form.instance.PBI = self.PBI
 		return super(TaskCreateView, self).form_valid(form)
 
+
+
+
+class TaskDetailView(DetailView):
+	model = Task
+	template_name = 'sprintBacklog/taskdetail.html'
+	context_object_name = 'task'
+
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
+		self.PBI = PBI.objects.get(pk=kwargs['PBI'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['PBI'] = self.PBI
+		context['project'] = self.project
+		return context
+
+
+
+class TaskUpdateView(UpdateView):
+	model =  Task
+	fields = [
+		'title',
+		'effort',
+		'task_owner',
+		'details',
+	]
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
+
+
+class TaskDeleteView(DeleteView):
+	model = Task
+	template_name = 'sprintBacklog/taskdelete.html'
+	context_object_name = 'task'
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
+
+
 def selectPBI(request, project, pk):
 	context = {
 		'project': Project.objects.get(slug=project),

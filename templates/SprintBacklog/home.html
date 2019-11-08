@@ -84,8 +84,9 @@
 			{% for i in t.todo %}
 				<div class="card">
 					<div class="card-body">
-						<a href="#"><h5 class="card-title">{{ i.title }}</h5></a>
+						<a href="{% url 'task-detail' project.slug i.pk %}"><h5 class="card-title">{{ i.title }}</h5></a>
 						<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+
 						<p class="card-text" style="text-align: right;">{{ i.effort }} hrs</p>
 					</div>
 				</div class="card">
