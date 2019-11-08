@@ -19,8 +19,8 @@
     		<br>
 	    	
 	    	<div class="toolbar">
-	    		<a class= "btn btn-outline-info" href="{% url 'sprintBacklog-edit' project.slug sprint.pk %}">Edit</a>
-	    		<a class="btn btn-outline-danger" href="{% url 'sprintBacklog-delete' project.slug sprint.pk %}">Delete</a>
+	    		<a class= "btn btn-outline-info" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
+	    		<a class="btn btn-outline-danger" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
 	    	</div>
     	</div>
 	</div>

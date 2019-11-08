@@ -220,12 +220,13 @@ class TaskDetailView(DetailView):
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
-		self.PBI = PBI.objects.get(pk=kwargs['PBI'])
+		# self.PBI = PBI.objects.get(pk=kwargs['PBI'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['PBI'] = self.PBI
+		# context['PBI'] = self.PBI
+		context['sprint'] = self.sprint
 		context['project'] = self.project
 		return context
 
@@ -235,8 +236,9 @@ class TaskUpdateView(UpdateView):
 	model =  Task
 	fields = [
 		'title',
-		'effort',
 		'task_owner',
+		'status',
+		'effort',
 		'details',
 	]
 
@@ -257,12 +259,16 @@ class TaskDeleteView(DeleteView):
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		return context
+
+	def get_success_url(self):
+		return '/' + str(self.project.slug) + '-sprint_' + str(self.sprint.pk)
 
 
 def selectPBI(request, project, pk):
