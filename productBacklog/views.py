@@ -43,19 +43,7 @@ class PBListView(ListView):
 
 	def get_queryset(self):
 		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
-		numOfPBI = len(queryset)
-		index = 0
-		for obj in queryset:
-			if obj.priority == index:
-				obj.priority -= 1
-				obj.save()
-			elif obj.priority > numOfPBI:
-				obj.priority = numOfPBI
-				obj.save()
-			else:
-				index = obj.priority
 		index = 1
-		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
 		for obj in queryset:
 			obj.priority = index
 			index = index + 1
@@ -126,6 +114,18 @@ class PBUpdateView(UpdateView):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		return context
+
+	def post(self, request):
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
+		pk = request.POST['pk']
+		prioirity = request.POST['priority']
+		for obj in queryset:
+			if obj.priority >= prioirity and obj.pk != pk:
+				obj.priority += 1
+				obj.save()
+		return super(PBUpdateView, self).post(request)
+
+
 
 
 class PBDeleteView(DeleteView):
