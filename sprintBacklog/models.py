@@ -2,11 +2,12 @@ from django.db import models
 from django.urls import reverse
 from project.models import Project
 from django.contrib.auth.models import User
+from datetime import date
 
 class Sprint(models.Model):
 	title = models.CharField(max_length=20, default="Sprint")
 	available_effort = models.IntegerField()
-	start_date = models.DateField(auto_now=True)
+	start_date = models.DateField(blank=True, null=True, default=date.today())
 	details = models.TextField(null=True)
 	project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
 

@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from project.models import Project
 from productBacklog.models import PBI
 from sprintBacklog.models import Sprint, Task
+from datetime import timedelta, date
 
 
 from django.views.generic import (
@@ -39,6 +40,25 @@ class SprintBacklogListView(ListView):
 			s.title = "Sprint" + str(index)
 			s.save()
 			index += 1
+
+		today = date.today()
+		for obj in PBI.objects.filter(sprint=self.sprint):
+			todo = Task.objects.filter(status='To Do', PBI=obj, sprint=obj.sprint.order_by('start_date').last())
+			doing = Task.objects.filter(status='Doing', PBI=obj, sprint=obj.sprint.order_by('start_date').last())
+			done = Task.objects.filter(status='Done', PBI=obj, sprint=obj.sprint.order_by('start_date').last())
+
+			if today - obj.sprint.order_by('start_date').last().start_date >= timedelta(weeks=self.project.duration):
+				if todo or doing:
+					obj.status = 'To Do'
+					obj.save()
+				elif done and not todo and not doing:
+					obj.status = 'Done'
+					obj.save()
+			else:
+				if done and not todo and not doing:
+					obj.status = 'Done'
+					obj.save()
+
 		return self.sprint
 
 	# get arg from url
