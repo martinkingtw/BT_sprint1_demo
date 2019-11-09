@@ -98,6 +98,15 @@ class PBCreateView(CreateView):
 		form.instance.project = self.project
 		return super().form_valid(form)
 
+	def post(self, request, *args, **kwargs):
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
+		prioirity = request.POST['priority']
+		for obj in queryset:
+			if obj.priority >= int(prioirity):
+				obj.priority += 1
+				obj.save()
+		return super(PBCreateView, self).post(request)
+
 class PBUpdateView(UpdateView):
 	model = PBI
 	fields = [
@@ -110,6 +119,7 @@ class PBUpdateView(UpdateView):
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.object = self.get_object()
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -117,15 +127,15 @@ class PBUpdateView(UpdateView):
 		context['project'] = self.project
 		return context
 
-	# def post(self, request):
-	# 	queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
-	# 	pk = request.POST['pk']
-	# 	prioirity = request.POST['priority']
-	# 	for obj in queryset:
-	# 		if obj.priority >= prioirity and obj.pk != pk:
-	# 			obj.priority += 1
-	# 			obj.save()
-	# 	return super(PBUpdateView, self).post(request)
+
+	def post(self, request, *args, **kwargs):
+		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
+		prioirity = request.POST['priority']
+		for obj in queryset:
+			if obj.priority >= int(prioirity) and obj != self.object:
+				obj.priority += 1
+				obj.save()
+		return super(PBUpdateView, self).post(request)
 
 
 
