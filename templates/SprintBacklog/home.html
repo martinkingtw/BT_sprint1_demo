@@ -77,6 +77,7 @@
 					</br>
 					<h5 class="card-text mt-auto" style="text-align: right">{{ t.finish }}/{{ t.not_finish }} hrs</h5>
 					<a href="{% url 'task-create' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto">New Task</a>
+					<a href="{% url 'sprintBacklog-remove' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-danger btn-sm mt-auto">Remove PBI</a>
 				</div>
 			</div>
 

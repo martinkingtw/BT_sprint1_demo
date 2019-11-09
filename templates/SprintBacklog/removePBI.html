@@ -1,0 +1,9 @@
+{% extends "base_narrow.html" %}
+{% block content %}
+<form method="POST"> {% csrf_token %}
+	<legend>Confirm Delete?</legend>
+	<p class="text-muted">*All tasks of this PBI will also be deleted</p>
+	<button class="btn btn-outline-danger" type="submit">Delete</button>
+	<a class="btn btn-outline-info" href="{% url 'sprint-home' project.slug sprint.pk %}">Cancel</a>
+</form>
+{% endblock content %}

@@ -287,3 +287,20 @@ def selectPBI(request, project, pk):
 			selectedPBI.save()
 		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
 	return render(request, 'sprintBacklog/selectPBI.html', context)
+
+def removePBI(request, project, sprint, pk):
+	context = {
+		'project': Project.objects.get(slug=project),
+		'sprint': Sprint.objects.get(pk=sprint),
+	}
+	if request.POST:
+		tmp = PBI.objects.get(pk=pk)
+		tmp.sprint.remove(Sprint.objects.get(pk=sprint))
+		tmp.status = 'To Do'
+		Task.objects.filter(PBI=PBI.objects.get(pk=pk)).delete()
+		tmp.save()
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': sprint}))
+
+	return render(request, 'sprintBacklog/removePBI.html', context)
+
+
