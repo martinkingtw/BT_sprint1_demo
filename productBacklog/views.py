@@ -6,8 +6,9 @@ from django.views.generic import (
 	DeleteView,
 	UpdateView,
 	)
-from .models import PBI, Project
+from .models import PBI, Project, Task
 from django.shortcuts import get_object_or_404
+from datetime import timedelta, date
 
 # def home(request):
 # 	context = {
@@ -44,10 +45,22 @@ class PBListView(ListView):
 	def get_queryset(self):
 		queryset = PBI.objects.filter(project_id=self.project).order_by('priority')
 		index = 1
+		today = date.today()
 		for obj in queryset:
 			obj.priority = index
 			index = index + 1
 			obj.save()
+		for obj in queryset:
+			if today - obj.sprint.order_by('start_date').latest('start_date') >= timedelta(weeks=self.project.duration):
+				if Task.objects.filter(status='To Do', PBI=obj, sprint=obj.sprint.order_by('start_date').latest()):
+					obj.status = 'To Do'
+					obj.save()
+				elif Task.objects.filter(status='Doing', PBI=obj, sprint=obj.sprint.order_by('start_date').latest()):
+					obj.status = 'Doing'
+					obj.save()
+				else:
+					obj.status = 'Done'
+					obj.save()
 		return queryset
 
 class PBDetailView(DetailView):
