@@ -13,8 +13,10 @@ class ProjectListView(ListView):
 
 class ProjectCreateView(CreateView):
 	model = Project
-	fields = ['title',
-			'details'
+	fields = [
+		'title',
+		'details',
+		'duration',
 	]
 	template_name = 'project/project_form.html'
 

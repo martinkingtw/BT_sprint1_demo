@@ -80,7 +80,7 @@ class PBCreateView(CreateView):
 			'priority',
 			'title',
 			'ESP',
-			'details'
+			'details',
 	]
 
 	def dispatch(self, request, *args, **kwargs):

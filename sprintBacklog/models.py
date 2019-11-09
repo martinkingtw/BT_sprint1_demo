@@ -7,7 +7,6 @@ class Sprint(models.Model):
 	title = models.CharField(max_length=20, default="Sprint")
 	available_effort = models.IntegerField()
 	start_date = models.DateField(auto_now=True)
-	duration = models.IntegerField("duration(week)", default=2)
 	details = models.TextField(null=True)
 	project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
 

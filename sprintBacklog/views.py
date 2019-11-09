@@ -88,7 +88,6 @@ class SprintBacklogCreateView(CreateView):
 	model = Sprint
 	fields = [
 		"available_effort",
-		"duration",
 		"details",
 	]
 
@@ -168,7 +167,6 @@ class SprintBacklogUpdateView(UpdateView):
 	model = Sprint
 	fields = [
 		"available_effort",
-		"duration",
 		"details",
 	]
 
