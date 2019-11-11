@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'sprintBacklog.apps.SprintbacklogConfig',
     'productBacklog.apps.ProductBacklogConfig',
+    'crispy_forms',
+    'users.apps.UsersConfig',
     'project.apps.ProjectConfig',
     'django.contrib.admin',
     'django.contrib.auth',
