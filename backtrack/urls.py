@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from users import views as user_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('register/',user_views.register, name='register'),
     path('<slug:project>-product/', include('productBacklog.urls')),
     path('<slug:project>-sprint_', include('sprintBacklog.urls')),
     path('', include('project.urls')),
