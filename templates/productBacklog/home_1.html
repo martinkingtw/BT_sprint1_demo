@@ -8,8 +8,21 @@ td, th {
 </style>
 	<div class="col">
 	<h1>PRODUCT BACKLOG - {{ project.title }}</h1>
-	<a href="{% url 'productBacklog-create' project.slug%}" class="btn btn-outline-info">Create New Item</a>
-	</br></br>
+
+	<ul class="nav nav-tabs" align="right">
+
+		<li class="nav-item">
+				<a class="nav-link active" href="">Unfinished</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="{% url 'productBacklog-all' project.slug %}">All</a>
+		</li>
+		<li class="nav-item">
+			<div class="btn-group" role="group">
+				<a href="{% url 'productBacklog-create' project.slug%}" class="btn btn-outline-info">Create New Item</a>
+			</div>
+		</li>
+	</ul>
 	<table class="table table-hover" >
 		<thead class="thead-light">
 			<tr>
@@ -18,7 +31,7 @@ td, th {
 	    		<th>Status</th>
 	    		<th>Sprint number</th>
 	    		<th>Estimated story point</th>
-	    		<th>Detail</th>
+	    		<th>Accumulative story point</th>
 	    	</tr>
     	</thead>
     	<tbody>
@@ -29,7 +42,7 @@ td, th {
 				<td>{{ i.pbi.status }}</td>
 				<td>{{ i.sprint_number }}</td>
 				<td>{{ i.pbi.ESP }}</td>
-				<td width="25%"; style="text-align: justify;">{{ i.pbi.details }}</td>
+				<td>{{ i.acc_SP }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
