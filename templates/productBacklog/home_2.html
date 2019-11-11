@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+{% block content %}
+<style>
+td, th {
+  text-align: center;
+}
+</style>
+	<div class="col">
+	<h1>PRODUCT BACKLOG - {{ project.title }}</h1>
+
+	<ul class="nav nav-tabs" align="right">
+
+		<li class="nav-item">
+				<a class="nav-link" href="{% url 'productBacklog-home' project.slug %}">Unfinished</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link active" href="">All</a>
+		</li>
+		<li class="nav-item">
+			<div class="btn-group" role="group">
+				<a href="{% url 'productBacklog-create' project.slug%}" class="btn btn-outline-info">Create New Item</a>
+			</div>
+		</li>
+	</ul>
+	<table class="table table-hover" >
+		<thead class="thead-light">
+			<tr>
+	    		<th>Title</th>
+	    		<th>Status</th>
+	    		<th>Sprint number</th>
+	    		<th>Estimated story point</th>
+	    		<th>Detail</th>
+	    	</tr>
+    	</thead>
+    	<tbody>
+			{% for i in PBIs %}
+			<tr>
+				<td><a class="pbi-title" data-toggle="tooltip" data-placement="top" title="edit/delete" href="{% url 'productBacklog-detail' project.slug i.pbi.pk%}">{{ i.pbi.title }}</a></td>
+				<td>{{ i.pbi.status }}</td>
+				<td>{{ i.sprint_number }}</td>
+				<td>{{ i.pbi.ESP }}</td>
+				<td width="25%"; style="text-align: justify;">{{ i.pbi.details }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock content %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
@@ -315,7 +315,7 @@ def removePBI(request, project, sprint, pk):
 		tmp = PBI.objects.get(pk=pk)
 		tmp.sprint.remove(Sprint.objects.get(pk=sprint))
 		tmp.status = 'To Do'
-		Task.objects.filter(PBI=PBI.objects.get(pk=pk)).delete()
+		Task.objects.filter(Q(PBI=PBI.objects.get(pk=pk)), Q(sprint=Sprint.objects.get(pk=sprint))).delete()
 		tmp.save()
 		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': sprint}))
 
