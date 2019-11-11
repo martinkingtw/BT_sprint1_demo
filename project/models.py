@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-# Create your models here.
+# fkelank
 class Project(models.Model):
 	title = models.CharField(max_length=20, unique=True)
 	details = models.TextField()
