@@ -11,6 +11,11 @@ class ProjectListView(ListView):
 	template_name = 'project/home.html'
 	context_object_name = 'projects'
 
+
+
+
+
+
 class ProjectCreateView(CreateView):
 	model = Project
 	fields = [
