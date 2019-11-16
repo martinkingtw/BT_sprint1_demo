@@ -4,18 +4,19 @@
 	<div class="card w-50">
 		<div class="card-body">
 			<h2 class="card-title">{{ task.title }}</h2>
-			<h5 class="card-subtitle text-muted">{{ task.sprint }}</h5>
-			<br>
-    		<h6>Effort</h6>
-    		<p>{{ task.effort }}</p>
-    		<br>
+			<h5 class="card-subtitle text-muted mb-3">{{ task.status }}</h5>
 
-    		<h6>Status</h6>
-    		<p>{{ task.status }}</p>
-    		<br>
+			<h6>Task Owner</h6>
+    		<p class="mb-3">{{ task.task_owner}}</p>
+
+    		<h6>Effort</h6>
+    		<p class="mb-3">{{ task.effort }} hrs</p>
+
+    		<h6>PBI</h6>
+    		<p class="mb-3">{{ task.PBI.title }}</p>
 
     		<h6>Details</h6>
-    		<p style="text-align: justify;" >{{ task.details }}</p>
+    		<p class="mb-3" style="text-align: justify;" >{{ task.details }}</p>
 	    	
 	    	<div class="toolbar">
 	    		{% if editable %}

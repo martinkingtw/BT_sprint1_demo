@@ -4,18 +4,15 @@
 	<div class="card w-50">
 		<div class="card-body">
 			<h2 class="card-title">{{ sprint.title }}</h2>
-			<h5 class="card-subtitle text-muted">{{ sprint.status }}</h5>
-			<br>
+			<h5 class="card-subtitle text-muted mb-3">{{ sprint.status }}</h5>
     		<h6>Available effort</h6>
-    		<p>{{ sprint.available_effort }}</p>
-    		<br>
+    		<p class="mb-3">{{ sprint.available_effort }} hrs</p>
 
     		<h6>Start date</h6>
-    		<p>{{ sprint.start_date }}</p>
-    		<br>
+    		<p class="mb-3">{{ sprint.start_date }}</p>
 
     		<h6>Details</h6>
-    		<p style="text-align: justify;" >{{ sprint.details }}</p>
+    		<p class="mb-3" style="text-align: justify;" >{{ sprint.details }}</p>
 	    	<div class="toolbar">
 	    	{% if editable %}
 	    		<a class= "btn btn-outline-info" role="button" href="{% url 'sprintBacklog-edit' project.slug sprint.pk %}">Edit</a>

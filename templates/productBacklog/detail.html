@@ -5,19 +5,16 @@
 	<div class="card w-50">
 		<div class="card-body">
     		<h2 class="card-title">{{ PBI.pbi.title }}</h2>
-			<h5 class="card-subtitle text-muted">{{ PBI.pbi.status }}</h5>
-			<br>
+			<h5 class="card-subtitle text-muted mb-3">{{ PBI.pbi.status }}</h5>
 
     		<h6>Sprint number</h6>
-			<p>{{ PBI.sprint_number }}</p>
-			<br>
+			<p class="mb-3">{{ PBI.sprint_number }}</p>
 
     		<h6>Estimated story point</h6>
-			<p>{{ PBI.pbi.ESP }}</p>
-			<br>
+			<p class="mb-3">{{ PBI.pbi.ESP }}</p>
 
     		<h6>Detail</h6>
-			<p style="text-align: justify;">{{ PBI.pbi.details }}</p>
+			<p class="mb-3" style="text-align: justify;">{{ PBI.pbi.details }}</p>
 
 			<div class="toolbar">
 			{% if editable %}
