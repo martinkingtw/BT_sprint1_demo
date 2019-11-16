@@ -39,25 +39,38 @@ class ProjectCreateView(CreateView):
 		context['D'] = self.users.filter(position=3, project_id=None)
 		return context
 
-
-	def post(self, request, *args, **kwargs):
-		info = request.POST
-		print(info)
-		if 'd' not in info:
+	def get_success_url(self):
+		if 'd' not in self.info:
 			return HttpResponseRedirect(reverse('project-create'))
-		emails = list()
-		emails.append(info['sm'])
-		for dev in info.getlist('d'):
-			emails.append(dev)
+		msg = 'Are you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
+		url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + self.info['sm']
+		msg += url
+		email = []
+		email.append(User.objects.get(pk=int(self.info['sm'])).email)
 		send_mail(
 			'[Action Required] Join a project!',
-			'Are you interested in joining ' + info['title'] + '? If it is the case, please click the following links!',
+			msg,
 			'mkmuzha@gmail.com',
-			emails,
+			email,
 		)
+		for dev in self.info.getlist('d'):
+			email = []
+			email.append(User.objects.get(pk=int(dev)).email)
+			msg = 'Are you interested in joining ' + self.info[
+				'title'] + '? If it is the case, please click the following links!\n'
+			url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + dev
+			msg += url
+			send_mail(
+				'[Action Required] Join a project!',
+				msg,
+				'mkmuzha@gmail.com',
+				email,
+			)
+			return super(ProjectCreateView, self).get_success_url()
+
+	def post(self, request, *args, **kwargs):
+		self.info = request.POST
 		return super(ProjectCreateView, self).post(request, *args, **kwargs)
-
-
 
 
 class ProjectDeleteView(DeleteView):
@@ -76,3 +89,13 @@ class ProjectDeleteView(DeleteView):
 	# 	context = super().get_context_data(**kwargs)
 	# 	context['project'] = self.project
 	# 	return context
+
+
+def join(request, project, user):
+	context = {
+		'project': Project.objects.get(pk=project),
+	}
+	joiner = User.objects.get(pk=user)
+	joiner.project_id = Project.objects.get(pk=project)
+	joiner.save()
+	return render(request, 'project/join.html', context)
