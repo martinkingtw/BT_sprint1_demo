@@ -4,9 +4,18 @@ from django.contrib.auth.admin import UserAdmin
 from .models import Profile,User
 
 # Register your models here.
+class AccountAdmin(UserAdmin):
+	list_display = ('email','username','position','date_joined','last_login')
+	search_fields = ('email','username')
+	readonly_fields = ('date_joined', 'last_login')
+
+
+	filter_horizontal = ()
+	list_filter = ()
+	fieldsets = ()
 
 
 
-admin.site.register(User)
+admin.site.register(User, AccountAdmin)
 admin.site.register(Profile)
 
