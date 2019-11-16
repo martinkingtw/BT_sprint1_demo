@@ -13,6 +13,26 @@
 		</div>
 		<br>
 		{% endfor %}
+		<br>
+		<div class="col">
+			<h3>Select Scrum Master</h3>
+			<select name="sm">
+				{% for sm in SM %}
+				<option value="{{sm}}">{{ sm.username }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<br>
+		<div class="col">
+			<h3>Select Developers</h3>
+			<select name="d" multiple>
+				{% for d in D %}
+				<option value="{{d}}">{{ d.username }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<br>
+		<h6>If you do not select developers, you will have to refill this form.</h6>
 		<button class="btn btn-outline-info" type="submit">Save</button>
 	</form>
 	</div>

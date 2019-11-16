@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from project.models import Project
 
 # Create your models here.
 
@@ -53,6 +54,7 @@ class User(AbstractBaseUser):
 	is_active			=	models.BooleanField(default=True)
 	is_staff			=	models.BooleanField(default=False)
 	is_superuser		=	models.BooleanField(default=False)
+	project_id = models.ForeignKey(Project, models.SET_NULL, null=True, blank=True)
 
 
 	USERNAME_FIELD	=	'email'
@@ -75,7 +77,7 @@ class User(AbstractBaseUser):
 
 class Profile(models.Model):
 	user = models.OneToOneField(User,on_delete=models.CASCADE)
-	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+	#image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
 
 	def __str__(self):
