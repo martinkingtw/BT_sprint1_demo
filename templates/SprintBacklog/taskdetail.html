@@ -16,11 +16,15 @@
 
     		<h6>Details</h6>
     		<p style="text-align: justify;" >{{ task.details }}</p>
-    		<br>
 	    	
 	    	<div class="toolbar">
+	    		{% if editable %}
 	    		<a class= "btn btn-outline-info" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
 	    		<a class="btn btn-outline-danger" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
+	    		{% else %}
+	    		<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
+	    		<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
+	    		{% endif %}
 	    	</div>
     	</div>
 	</div>

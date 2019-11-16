@@ -10,9 +10,10 @@ class PBI(models.Model):
 		('To Do', 'To Do'),
 		('Doing', 'Doing'),
 		('Done', 'Done'),
+		('Unfinished', 'Unfinished')
 	]
 	status = models.CharField(
-		max_length = 5,
+		max_length = 20,
 		choices = status_choice,
 		default = 'To Do',
 	)
@@ -30,3 +31,6 @@ class PBI(models.Model):
 	def save(self, *args, **kwargs):
 		# adjust priority here
 		super().save(*args, **kwargs)
+
+	def editable(self):
+		return not (self.status == 'Doing' or self.status == 'Done')

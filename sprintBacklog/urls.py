@@ -9,7 +9,6 @@ from .views import (
     TaskDetailView,
     TaskUpdateView,
     TaskDeleteView,
-
 	)
 from . import views
 
@@ -20,6 +19,9 @@ urlpatterns = [
     path('<int:pk>-detail/', SprintBacklogDetailView.as_view(), name='sprintBacklog-detail'),
     path('<int:pk>-delete/', SprintBacklogDeleteView.as_view(), name='sprintBacklog-delete'),
     path('<int:pk>-edit/', SprintBacklogUpdateView.as_view(), name='sprintBacklog-edit'),
+    path('<int:pk>-start/', views.start, name='sprintBacklog-start'),
+    path('<int:pk>-end/', views.end, name='sprintBacklog-end'),
+
     path('<int:sprint>/<int:PBI>-create/', TaskCreateView.as_view(), name='task-create'),
     path('<int:pk>-select/', views.selectPBI, name='sprintBacklog-select'),
     path('<int:sprint>-removePBI/<int:pk>', views.removePBI, name='sprintBacklog-remove'),

@@ -4,7 +4,7 @@
 	<div class="card w-50">
 		<div class="card-body">
 			<h2 class="card-title">{{ sprint.title }}</h2>
-			<h5 class="card-subtitle text-muted">{{ sprint.project }}</h5>
+			<h5 class="card-subtitle text-muted">{{ sprint.status }}</h5>
 			<br>
     		<h6>Available effort</h6>
     		<p>{{ sprint.available_effort }}</p>
@@ -16,11 +16,14 @@
 
     		<h6>Details</h6>
     		<p style="text-align: justify;" >{{ sprint.details }}</p>
-    		<br>
-	    	
 	    	<div class="toolbar">
-	    		<a class= "btn btn-outline-info" href="{% url 'sprintBacklog-edit' project.slug sprint.pk %}">Edit</a>
-	    		<a class="btn btn-outline-danger" href="{% url 'sprintBacklog-delete' project.slug sprint.pk %}">Delete</a>
+	    	{% if editable %}
+	    		<a class= "btn btn-outline-info" role="button" href="{% url 'sprintBacklog-edit' project.slug sprint.pk %}">Edit</a>
+	    		<a class="btn btn-outline-danger" role="button" href="{% url 'sprintBacklog-delete' project.slug sprint.pk %}">Delete</a>
+	    	{% else %}
+	    		<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'sprintBacklog-edit' project.slug sprint.pk %}">Edit</a>
+	    		<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'sprintBacklog-delete' project.slug sprint.pk %}">Delete</a>
+	    	{% endif %}
 	    	</div>
     	</div>
 	</div>

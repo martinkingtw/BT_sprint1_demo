@@ -17,6 +17,21 @@ from django.views.generic import (
 	DetailView
 )
 
+def start(request, project, pk):
+	sprint = Sprint.objects.get(pk=pk)
+	if request.POST:
+		sprint.startSprint()
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
+	return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
+
+def end(request, project, pk):
+	sprint = Sprint.objects.get(pk=pk)
+	if request.POST:
+		sprint.endSprint()
+		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
+	return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
+
+
 def noSprint(request, project):
 	context = {
 		'project': Project.objects.get(slug=project)
@@ -40,25 +55,6 @@ class SprintBacklogListView(ListView):
 			s.title = "Sprint" + str(index)
 			s.save()
 			index += 1
-
-		today = date.today()
-		for obj in PBI.objects.filter(sprint=self.sprint):
-			todo = Task.objects.filter(status='To Do', PBI=obj, sprint=obj.sprint.order_by('start_date').last())
-			doing = Task.objects.filter(status='Doing', PBI=obj, sprint=obj.sprint.order_by('start_date').last())
-			done = Task.objects.filter(status='Done', PBI=obj, sprint=obj.sprint.order_by('start_date').last())
-
-			if today - obj.sprint.order_by('start_date').last().start_date >= timedelta(weeks=self.project.duration):
-				if todo or doing:
-					obj.status = 'To Do'
-					obj.save()
-				elif done and not todo and not doing:
-					obj.status = 'Done'
-					obj.save()
-			else:
-				if done and not todo and not doing:
-					obj.status = 'Done'
-					obj.save()
-
 		return self.sprint
 
 	# get arg from url
@@ -73,6 +69,7 @@ class SprintBacklogListView(ListView):
 		context['project'] = self.project
 		context['all_sprint'] = Sprint.objects.filter(project=self.project).order_by('pk')
 		context['PBI'] = PBI.objects.filter(project=self.project, status='To Do')
+		context['lastSprintEnded'] = Sprint.objects.filter(project=self.project).order_by('pk').last().status == 'Ended'
 		
 		task = []
 		total = 0
@@ -132,12 +129,14 @@ class SprintBacklogDetailView(DetailView):
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		self.sprint = Sprint.objects.get(pk=kwargs['pk'])
+		print(self.sprint.editable())
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		context['sprint'] = self.sprint
+		context['editable'] = self.sprint.editable()
 
 		task = []
 		for p in PBI.objects.filter(sprint=self.sprint):
@@ -182,6 +181,10 @@ class SprintBacklogDeleteView(DeleteView):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		return context
+
+	def post(self, request, *args, **kwargs):
+		PBI.objects.filter(sprint = self.sprint).update(status='To Do')
+		return super().post(request, *args, **kwargs)
 
 class SprintBacklogUpdateView(UpdateView):
 	model = Sprint
@@ -239,6 +242,7 @@ class TaskDetailView(DetailView):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
 		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
 		# self.PBI = PBI.objects.get(pk=kwargs['PBI'])
+		self.task = Task.objects.get(pk=kwargs['pk'])
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -246,6 +250,7 @@ class TaskDetailView(DetailView):
 		# context['PBI'] = self.PBI
 		context['sprint'] = self.sprint
 		context['project'] = self.project
+		context['editable'] = self.task.editable()
 		return context
 
 
@@ -293,15 +298,12 @@ def selectPBI(request, project, pk):
 	context = {
 		'project': Project.objects.get(slug=project),
 		'sprint': Sprint.objects.get(pk=pk),
-		'PBI': PBI.objects.filter(project=Project.objects.get(slug=project), status='To Do'),
+		'PBI': PBI.objects.filter(Q(project=Project.objects.get(slug=project)), Q(status='To Do') | Q(status='Unfinished')).exclude(sprint=Sprint.objects.get(pk=pk)),
 	}
 	if request.POST:
-		print(request.POST.getlist('PBIs'))
 		for id in request.POST.getlist('PBIs'):
-			print(id)
 			selectedPBI = PBI.objects.get(pk=id)
 			selectedPBI.sprint.add(Sprint.objects.get(pk=pk))
-			selectedPBI.status = 'Doing'
 			selectedPBI.save()
 		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': pk}))
 	return render(request, 'sprintBacklog/selectPBI.html', context)
@@ -320,5 +322,3 @@ def removePBI(request, project, sprint, pk):
 		return HttpResponseRedirect(reverse('sprint-home', kwargs={'project': project, 'sprint': sprint}))
 
 	return render(request, 'sprintBacklog/removePBI.html', context)
-
-

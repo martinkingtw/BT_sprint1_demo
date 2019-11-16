@@ -12,15 +12,13 @@ td, th {
 	<ul class="nav nav-tabs" align="right">
 
 		<li class="nav-item">
-				<a class="nav-link" href="{% url 'productBacklog-home' project.slug %}">Unfinished</a>
+				<a class="nav-link" href="{% url 'productBacklog-home' project.slug %}">To be Implemented</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link active" href="">All</a>
 		</li>
 		<li class="nav-item">
-			<div class="btn-group" role="group">
-				<a href="{% url 'productBacklog-create' project.slug%}" class="btn btn-outline-info">Create New Item</a>
-			</div>
+			<a href="{% url 'productBacklog-create' project.slug%}" class="btn btn-outline-info ml-2">Create New Item</a>
 		</li>
 	</ul>
 	<table class="table table-hover" >

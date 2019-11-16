@@ -31,8 +31,8 @@ class AllPBListView(ListView):
 		context['project'] = self.project
 		# sprint number
 		PBIs = []
-		done = PBI.objects.filter(Q(project_id=self.project), Q(status="Done"))
-		queryset = PBI.objects.filter(Q(project_id=self.project), Q(status="Doing") | Q(status="To Do")).order_by('priority')
+		done = PBI.objects.filter(Q(project=self.project), Q(status="Done"))
+		queryset = PBI.objects.filter(Q(project=self.project), Q(status="Doing") | Q(status="To Do") | Q(status="Unfinished")).order_by('priority')
 		for pbi in list(done) + list(queryset):
 			n = ''
 			for i in pbi.sprint.all():
@@ -49,7 +49,7 @@ class AllPBListView(ListView):
 
 	def get_queryset(self):
 		index = 1
-		queryset = PBI.objects.filter(Q(project_id=self.project), Q(status="Doing") | Q(status="To Do")).order_by('priority')
+		queryset = PBI.objects.filter(Q(project=self.project), Q(status="Doing") | Q(status="To Do") | Q(status="Unfinished")).order_by('priority')
 		for obj in queryset:
 			obj.priority = index
 			index = index + 1
@@ -70,7 +70,7 @@ class TodoPBListView(ListView):
 		# sprint number, accumulative ESP
 		PBIs = []
 		accumulative = 0
-		for pbi in PBI.objects.filter(Q(project_id=self.project), Q(status="Doing") | Q(status="To Do")).order_by('priority'):
+		for pbi in PBI.objects.filter(Q(project=self.project), Q(status="Doing") | Q(status="To Do") | Q(status="Unfinished")).order_by('priority'):
 			n = ''
 			for i in pbi.sprint.all():
 				n += i.title[-1]
@@ -88,7 +88,7 @@ class TodoPBListView(ListView):
 		return context
 
 	def get_queryset(self):
-		queryset = PBI.objects.filter(Q(project_id=self.project), Q(status="Doing") | Q(status="To Do")).order_by('priority')
+		queryset = PBI.objects.filter(Q(project=self.project), Q(status="Doing") | Q(status="To Do") | Q(status="Unfinished")).order_by('priority')
 		index = 1
 		for obj in queryset:
 			obj.priority = index
@@ -108,6 +108,7 @@ class PBDetailView(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
+		context['editable'] = self.pbi.editable()
 		n = ''
 		for i in self.pbi.sprint.all():
 			n += i.title[-1]
@@ -141,7 +142,7 @@ class PBCreateView(CreateView):
 	def form_valid(self, form):
 		form.instance.project = self.project
 		# priority
-		queryset = PBI.objects.filter(Q(project_id=self.project), Q(status="Doing") | Q(status="To Do")).order_by('priority')
+		queryset = PBI.objects.filter(Q(project=self.project), Q(status="Doing") | Q(status="To Do") | Q(status="Unfinished")).order_by('priority')
 		prioirity = form.instance.priority
 		for obj in queryset:
 			if obj.priority >= int(prioirity):
@@ -175,9 +176,8 @@ class PBUpdateView(UpdateView):
 		return context
 
 	def form_valid(self, form):
-		
 		prioirity = form.instance.priority
-		queryset = PBI.objects.filter(Q(project_id=self.project), Q(status="Doing") | Q(status="To Do")).order_by('priority')
+		queryset = PBI.objects.filter(Q(project=self.project), Q(status="Doing") | Q(status="To Do") | Q(status="Unfinished")).order_by('priority')
 		firstRun = True
 		for obj in queryset:
 			if obj.priority >= int(prioirity) and obj != self.object:
