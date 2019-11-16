@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from project.models import Project
-from django.contrib.auth.models import User
+from users.models import User
 from datetime import date
 
 class Sprint(models.Model):
