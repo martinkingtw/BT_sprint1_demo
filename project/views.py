@@ -74,10 +74,13 @@ class ProjectCreateView(LoginRequiredMixin,CreateView):
 		self.info = request.POST
 		return super(ProjectCreateView, self).post(request, *args, **kwargs)
 
-	def form_valid(self,form):
-		self.request.user.position = '1'
-		return super().form_valid(form)
 
+
+	def form_valid(self,form):
+		user1 = self.request.user
+		user1.position = '1'
+	
+		return super().form_valid(form)
 
 class ProjectDeleteView(LoginRequiredMixin,DeleteView):
 	model = Project
