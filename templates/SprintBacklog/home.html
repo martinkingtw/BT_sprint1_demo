@@ -14,24 +14,37 @@
 		{% endfor %}
 		{% if lastSprintEnded %}
 		<li class="nav-item">
-			<a class="btn btn-outline-info ml-2" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
+
+			{%if user.position == '1'%}
+				<a class="btn btn-outline-info ml-2" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
+			{%endif%}
 		</li>
 		{% endif %}
 		{% if sprint.status == 'Not Started' %}
 		<li class="nav-item">
-			<a class="btn btn-outline-info ml-2" href="{% url 'sprintBacklog-select' project.slug sprint.pk%}">Select PBI</a>
+			{%if user.position == '1'%}
+				<a class="btn btn-outline-info ml-2" href="{% url 'sprintBacklog-select' project.slug sprint.pk%}">Select PBI</a>
+
+			{%endif%}
 		</li>
 		{% endif %}
 		{% if sprint.status != 'Ended' %}
 		<li class="nav-item">
 			{% if sprint.status == 'Not Started' %}
-			<form action="{% url 'sprintBacklog-start' project.slug sprint.pk%}"  method="POST">{% csrf_token %}
-				<button class="btn btn-outline-info ml-2">Start Sprint</button>
-			</form>
+				{%if user.position == '1'%}
+					<form action="{% url 'sprintBacklog-start' project.slug sprint.pk%}"  method="POST">{% csrf_token %}
+					<button class="btn btn-outline-info ml-2">Start Sprint</button>
+					</form>
+				{%else%}
+
+					<a class="btn btn-outline-info ml-2" href="#">Waiting Product owner to start the sprint</a>
+				{%endif%}
 			{% elif sprint.status == 'Started' %}
-			<form action="{% url 'sprintBacklog-end' project.slug sprint.pk%}"  method="POST">{% csrf_token %}
-				<button class="btn btn-outline-info ml-2">End Sprint</button>
-			</form>
+				{%if user.position == '1'%}
+					<form action="{% url 'sprintBacklog-end' project.slug sprint.pk%}"  method="POST">{% csrf_token %}
+					<button class="btn btn-outline-info ml-2">End Sprint</button>
+					</form>
+				{%endif%}
 			{% endif %}
 		</li>
 		{% endif %}
@@ -95,8 +108,10 @@
 					</br>
 					<h5 class="card-text mt-auto" style="text-align: right">{{ t.finish }}/{{ t.not_finish }} hrs</h5>
 					{% if sprint.status == "Not Started" %}
-					<a href="{% url 'task-create' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto mb-1">New Task</a>
-					<a href="{% url 'sprintBacklog-remove' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-danger btn-sm mt-auto">Remove PBI</a>
+						<a href="{% url 'task-create' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto mb-1">New Task</a>
+						{%if user.position == '1'%}
+							<a href="{% url 'sprintBacklog-remove' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-danger btn-sm mt-auto">Remove PBI</a>
+						{%endif%}
 					{% endif %}
 				</div>
 			</div>

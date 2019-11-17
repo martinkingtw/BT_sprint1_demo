@@ -5,8 +5,22 @@
 	<ul class="nav nav-tabs" align="right">
 		<li class="nav-item">
 			<div class="btn-group" role="group" aria-label="Basic example">
-			<a class="btn btn-outline-info" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
-			</div>	
+			
+			{%if user.position == '1'%}
+
+				<a class="btn btn-outline-info" href="{% url 'sprintBacklog-create' project.slug %}">New Sprint</a>
+			{%endif%}
+				
+			</div>
+
+
 		</li>
+
 	</ul>
+	
+	{%if user.position != '1'%}
+		<h5>NO SPRINT AT THE MOMENT</h5>
+	{%endif%}
+	<br>
+	
 {% endblock content %}
