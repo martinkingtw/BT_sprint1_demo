@@ -5,6 +5,8 @@ from django.views.generic import (
 	DeleteView
 )
 from productBacklog.models import Project
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from users.models import User
 from django.urls import reverse
 from django.core.mail import send_mail
@@ -19,7 +21,7 @@ class ProjectListView(ListView):
 
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin,CreateView):
 	model = Project
 	fields = [
 		'title',
@@ -73,7 +75,7 @@ class ProjectCreateView(CreateView):
 		return super(ProjectCreateView, self).post(request, *args, **kwargs)
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin,DeleteView):
 	model = Project
 	template_name = 'project/delete.html'
 	slug_url_kwarg = 'project'
