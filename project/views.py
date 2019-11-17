@@ -6,7 +6,6 @@ from django.views.generic import (
 )
 from productBacklog.models import Project
 from users.models import User
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.core.mail import send_mail
 
@@ -41,7 +40,8 @@ class ProjectCreateView(CreateView):
 
 	def get_success_url(self):
 		if 'd' not in self.info:
-			return HttpResponseRedirect(reverse('project-create'))
+			self.object.delete()
+			return reverse('project-create')
 		msg = 'Are you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
 		url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + self.info['sm']
 		msg += url
