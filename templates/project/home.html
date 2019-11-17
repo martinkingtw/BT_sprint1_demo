@@ -1,14 +1,30 @@
 {% extends "base_noSidebar.html" %}
 {% block content %}
-<h1>ALL PROJECTS</h1>
+
+
+	<h1>PROJECTS</h1>
+
 
 {% for project in projects %}
-	<h2><a href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
-	<p align="justify">{{ project.details }}</p>
-	<a class="btn btn-outline-danger" href="{% url 'project-delete' project.slug %}">Delete project</a>
-	<br/>
+	{%if user.project_id == project%}
+		<h2><a href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
+		<p align="justify">{{ project.details }}</p>
+
+	
+		{%if user.position == '1'%}
+			<a class="btn btn-outline-danger" href="{% url 'project-delete' project.slug %}">Delete project</a>
+		{%endif%}
+	{%endif%}
+
 	<br/>
 {% endfor %}
+	
+	{%if user.position == '3'%}
+		{%if user.project_id == null%}
+		<a class="btn btn-outline-info" href="{% url 'project-create' %}">Create Project</a>
+		{%endif%}
+	{%endif%}
+	
 
-<a class="btn btn-outline-info" href="{% url 'project-create' %}">Create Project</a>
+
 {% endblock content %}
