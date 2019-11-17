@@ -2,13 +2,23 @@
 {% block content %}
 
 
-	<h1>PROJECTS</h1>
+	
+	
+	{%if user.id != None%}
+		<h1>PROJECTS</h1>
+	{%else%}
+		<h1> BACKTRACK </h1>
+		<h5> 	        
+	          		<a href="{% url 'login'%}">Login</a> OR
+	          		<a href="{% url 'register'%}">Register</a></h5>
+	{%endif%}
 
 
+	
 {% for project in projects %}
 	{%if user.project_id == project%}
 		<h2><a href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
-		<p align="justify">{{ project.details }}</p>
+		<p align="justify">Project detail: {{ project.details }}</p>
 
 	
 		{%if user.position == '1'%}

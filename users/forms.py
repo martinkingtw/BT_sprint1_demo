@@ -6,8 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 class UserRegisterForm(UserCreationForm):
 	email=forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
 	USER_CHOICE =(
-		(1,("Product Owner")),
-		(2,("Scrum Master")),
+	
+		(2,("Manager")),
 		(3,("Developer"))
 )
 
