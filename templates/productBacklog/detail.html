@@ -17,13 +17,24 @@
 			<p class="mb-3" style="text-align: justify;">{{ PBI.pbi.details }}</p>
 
 			<div class="toolbar">
-			{% if editable %}
-	    		<a class= "btn btn-outline-info" role="button" href="{% url 'productBacklog-update' project.slug PBI.pbi.pk%}">Edit</a>
-				<a class="btn btn-outline-danger" role="button" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
-			{% else %}
-				<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'productBacklog-update' project.slug PBI.pbi.pk%}">Edit</a>
-				<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
-			{% endif %}
+			
+			{%if user.position == '1' %}
+				{% if editable %}
+		    		<a class= "btn btn-outline-info" role="button" href="{% url 'productBacklog-update' project.slug PBI.pbi.pk%}">Edit</a>
+					<a class="btn btn-outline-danger" role="button" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
+				{% else %}
+						
+					
+						<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'productBacklog-update' project.slug PBI.pbi.pk%}">Edit</a>
+						<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
+					
+				{% endif %}
+
+			{%else%}
+				<a href = "#"> contact your product owner</a>
+			{%endif%}
+
+
 			</div>
 		</div>
 	</div>
