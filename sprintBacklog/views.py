@@ -8,6 +8,8 @@ from productBacklog.models import PBI
 from sprintBacklog.models import Sprint, Task
 from datetime import timedelta, date
 
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 
 from django.views.generic import (
 	ListView, 
@@ -101,7 +103,7 @@ class SprintBacklogListView(ListView):
 		context['task'] = task
 		return context
 
-class SprintBacklogCreateView(CreateView):
+class SprintBacklogCreateView(UserPassesTestMixin,CreateView):
 	model = Sprint
 	fields = [
 		"available_effort",
@@ -120,6 +122,11 @@ class SprintBacklogCreateView(CreateView):
 	def form_valid(self, form):
 		form.instance.project = self.project
 		return super().form_valid(form)
+
+	def test_func(self):
+		if self.request.user.position == '1':
+			return True
+		return False
 
 class SprintBacklogDetailView(DetailView):
 	model = Sprint
@@ -158,7 +165,7 @@ class SprintBacklogDetailView(DetailView):
 
 		return context
 
-class SprintBacklogDeleteView(DeleteView):
+class SprintBacklogDeleteView(UserPassesTestMixin,DeleteView):
 	model = Sprint
 	template_name = 'sprintBacklog/delete.html'
 
@@ -186,7 +193,12 @@ class SprintBacklogDeleteView(DeleteView):
 		PBI.objects.filter(sprint = self.sprint).update(status='To Do')
 		return super().post(request, *args, **kwargs)
 
-class SprintBacklogUpdateView(UpdateView):
+	def test_func(self):
+		if self.request.user.position == '1':
+			return True
+		return False
+
+class SprintBacklogUpdateView(UserPassesTestMixin,UpdateView):
 	model = Sprint
 	fields = [
 		"available_effort",
@@ -201,6 +213,11 @@ class SprintBacklogUpdateView(UpdateView):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		return context
+
+	def test_func(self):
+		if self.request.user.position == '1':
+			return True
+		return False
 
 class TaskCreateView(CreateView):
 	model = Task
