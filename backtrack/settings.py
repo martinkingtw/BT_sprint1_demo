@@ -135,7 +135,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'project-home'
+LOGIN_REDIRECT_URL = 'productBacklog-home2'
 LOGIN_URL = 'login'
 
 DEFAULT_FROM_EMAIL = "mkmuzha@gmail.com"

@@ -9,7 +9,9 @@ from productBacklog.models import Project
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from users.models import User
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from django.utils.text import slugify
 
 class ProjectListView(ListView):
 	model = Project
@@ -18,8 +20,11 @@ class ProjectListView(ListView):
 
 
 
-
-
+def redirect_to_home(request):
+	if request.user.project_id:
+		return HttpResponseRedirect(reverse('productBacklog-home',kwargs={'project': slugify(request.user.project_id.title)}))
+	
+	return HttpResponseRedirect(reverse('project-home'))
 
 class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 	model = Project

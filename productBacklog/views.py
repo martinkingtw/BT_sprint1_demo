@@ -15,6 +15,8 @@ from datetime import timedelta, date
 from users.models import Profile
 
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 # def home(request):
 # 	context = {
