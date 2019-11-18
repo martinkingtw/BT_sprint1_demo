@@ -119,9 +119,12 @@ class ProjectDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
 
 
 def join(request, project, user):
-	context = {
-		'project': Project.objects.get(pk=project),
-	}
+	try:
+		context = {
+			'project': Project.objects.get(pk=project),
+		}
+	except:
+		return render(request, 'project/noProject.html', {})
 	joiner = User.objects.get(pk=user)
 	joiner.project_id = Project.objects.get(pk=project)
 	joiner.save()
