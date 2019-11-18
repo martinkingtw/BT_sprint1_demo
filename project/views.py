@@ -6,7 +6,7 @@ from django.views.generic import (
 )
 from productBacklog.models import Project
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from users.models import User
 from django.urls import reverse
 from django.core.mail import send_mail
@@ -21,7 +21,7 @@ class ProjectListView(ListView):
 
 
 
-class ProjectCreateView(LoginRequiredMixin,CreateView):
+class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 	model = Project
 	fields = [
 		'title',
@@ -74,21 +74,28 @@ class ProjectCreateView(LoginRequiredMixin,CreateView):
 		self.info = request.POST
 		return super(ProjectCreateView, self).post(request, *args, **kwargs)
 
+	def test_func(self):
+		if self.request.user.position == '3':
+			return True
+		return False
 
 
-	def form_valid(self,form):
-		user1 = self.request.user
-		user1.position = '1'
 	
-		return super().form_valid(form)
 
-class ProjectDeleteView(LoginRequiredMixin,DeleteView):
+
+
+
+class ProjectDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
 	model = Project
 	template_name = 'project/delete.html'
 	slug_url_kwarg = 'project'
 	def get_success_url(self):
 		return '/'
 
+	def test_func(self):
+		if self.request.user.position == '1':
+			return True
+		return False
 	# def dispatch(self, request, *args, **kwargs):
 	# 	self.project_id = kwargs['fk']
 	# 	self.project = get_object_or_404(Project, pk=kwargs['fk'])

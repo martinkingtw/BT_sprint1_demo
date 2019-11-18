@@ -14,6 +14,8 @@ from django.shortcuts import get_object_or_404
 from datetime import timedelta, date
 from users.models import Profile
 
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 # def home(request):
 # 	context = {
 # 		'dict': PBI.objects.all().order_by('priority')
@@ -122,7 +124,7 @@ class PBDetailView(DetailView):
 		context['PBI'] = tmp
 		return context
 
-class PBCreateView(CreateView):
+class PBCreateView(UserPassesTestMixin,CreateView):
 	model = PBI
 	fields = [
 			'priority',
@@ -154,8 +156,13 @@ class PBCreateView(CreateView):
 	def post(self, request, *args, **kwargs):
 		return super(PBCreateView, self).post(request)
 
+	def test_func(self):
+		if self.request.user.position == '1':
+			return True
+		return False
 
-class PBUpdateView(UpdateView):
+
+class PBUpdateView(UserPassesTestMixin,UpdateView):
 	model = PBI
 	fields = [
 			'priority',
@@ -192,8 +199,14 @@ class PBUpdateView(UpdateView):
 	def post(self, request, *args, **kwargs):
 		return super(PBUpdateView, self).post(request)
 
+	def test_func(self):
+		pbi = self.get_object()
+		if self.request.user.position == '1':
+			return True
+		return False
 
-class PBDeleteView(DeleteView):
+
+class PBDeleteView(UserPassesTestMixin,DeleteView):
 	model = PBI
 	template_name = 'productBacklog/delete.html'
 	def get_success_url(self):
@@ -207,6 +220,12 @@ class PBDeleteView(DeleteView):
 		context = super().get_context_data(**kwargs)
 		context['project'] = self.project
 		return context
+
+	def test_func(self):
+		pbi = self.get_object()
+		if self.request.user.position == '1':
+			return True
+		return False
 
 class projectListView(ListView):
 	model = Project
