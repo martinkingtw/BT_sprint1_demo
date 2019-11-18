@@ -20,8 +20,12 @@
 	    	
 	    	<div class="toolbar">
 	    		{% if editable %}
-	    		<a class= "btn btn-outline-info" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
-	    		<a class="btn btn-outline-danger" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
+	    			{% if task.task_owner == user %}
+	    				<a class= "btn btn-outline-info" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
+	    				<a class="btn btn-outline-danger" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
+	    			{%else%}
+	    				<h6 style="color:red;">You are not task owner. Cant edit or delete.</h6>
+					{%endif%}
 	    		{% else %}
 	    		<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
 	    		<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>

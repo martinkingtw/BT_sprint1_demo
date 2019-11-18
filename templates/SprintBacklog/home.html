@@ -108,7 +108,9 @@
 					</br>
 					<h5 class="card-text mt-auto" style="text-align: right">{{ t.finish }}/{{ t.not_finish }} hrs</h5>
 					{% if sprint.status == "Not Started" %}
-						<a href="{% url 'task-create' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto mb-1">New Task</a>
+						{% if user.position != '2'%}
+							<a href="{% url 'task-create' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-info btn-sm mt-auto mb-1">New Task</a>
+						{%endif%}
 						{%if user.position == '1'%}
 							<a href="{% url 'sprintBacklog-remove' project.slug sprint.pk t.pbi.pk %}" class="btn btn-outline-danger btn-sm mt-auto">Remove PBI</a>
 						{%endif%}
