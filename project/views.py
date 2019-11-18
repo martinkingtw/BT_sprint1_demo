@@ -26,24 +26,27 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 	fields = [
 		'title',
 		'details',
-		'duration',
 	]
 	template_name = 'project/project_form.html'
 
 	def dispatch(self, request, *args, **kwargs):
+		self.self = request.user
 		self.users = User.objects.all()
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['SM'] = self.users.filter(position=2)
-		context['D'] = self.users.filter(position=3, project_id=None)
+		context['D'] = self.users.filter(position=3, project_id=None).exclude(pk=self.self.pk)
 		return context
 
 	def get_success_url(self):
 		if 'd' not in self.info:
 			self.object.delete()
 			return reverse('project-create')
+		self.self.position = 1
+		self.self.project_id = Project.objects.get(pk=self.object.pk)
+		self.self.save()
 		msg = 'Are you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
 		url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + self.info['sm']
 		msg += url
@@ -89,13 +92,21 @@ class ProjectDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
 	model = Project
 	template_name = 'project/delete.html'
 	slug_url_kwarg = 'project'
-	def get_success_url(self):
-		return '/'
 
 	def test_func(self):
 		if self.request.user.position == '1':
 			return True
 		return False
+
+	def dispatch(self, request, *args, **kwargs):
+		self.self = request.user
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_success_url(self):
+		self.self.position = 3
+		self.self.save()
+		return '/'
+
 	# def dispatch(self, request, *args, **kwargs):
 	# 	self.project_id = kwargs['fk']
 	# 	self.project = get_object_or_404(Project, pk=kwargs['fk'])
