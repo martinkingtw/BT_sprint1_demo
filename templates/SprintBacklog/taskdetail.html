@@ -26,9 +26,8 @@
 	    			{%else%}
 	    				<h6 style="color:red;">You are not task owner. Cant edit or delete.</h6>
 					{%endif%}
-	    		{% else %}
-	    		<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
-	    		<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
+	    		
+	    		
 	    		{% endif %}
 	    	</div>
     	</div>

@@ -272,7 +272,7 @@ class TaskDetailView(DetailView):
 
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(UserPassesTestMixin,UpdateView):
 	model =  Task
 	fields = [
 		'title',
@@ -291,8 +291,14 @@ class TaskUpdateView(UpdateView):
 		context['project'] = self.project
 		return context
 
+	def test_func(self):
+		task = self.get_object()
+		if task.task_owner == self.request.user:
+			return True
+		return False
 
-class TaskDeleteView(DeleteView):
+
+class TaskDeleteView(UserPassesTestMixin,DeleteView):
 	model = Task
 	template_name = 'sprintBacklog/taskdelete.html'
 	context_object_name = 'task'
@@ -309,6 +315,12 @@ class TaskDeleteView(DeleteView):
 
 	def get_success_url(self):
 		return '/' + str(self.project.slug) + '-sprint_' + str(self.sprint.pk)
+
+	def test_func(self):
+		task = self.get_object()
+		if task.task_owner == self.request.user:
+			return True
+		return False
 
 
 def selectPBI(request, project, pk):
