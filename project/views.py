@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import (
 	ListView, 
 	CreateView, 
@@ -37,10 +37,15 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 	def dispatch(self, request, *args, **kwargs):
 		self.self = request.user
 		self.users = User.objects.all()
+		self.url = request.get_full_path()
 		return super().dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		if self.url == '/duplicate/':
+			context['duplicate'] = 'True'
+		else:
+			context['duplicate'] = 'False'
 		context['SM'] = self.users.filter(position=2)
 		context['D'] = self.users.filter(position=3, project_id=None).exclude(pk=self.self.pk)
 		return context
@@ -80,7 +85,11 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 
 	def post(self, request, *args, **kwargs):
 		self.info = request.POST
-		return super(ProjectCreateView, self).post(request, *args, **kwargs)
+		try:
+			Project.objects.get(title=self.info['title'])
+			return redirect(reverse('project-duplicate'))
+		except:
+			return super(ProjectCreateView, self).post(request, *args, **kwargs)
 
 	def test_func(self):
 		if self.request.user.position == '3':
@@ -134,3 +143,4 @@ def join(request, project, user):
 	joiner.project_id = Project.objects.get(pk=project)
 	joiner.save()
 	return render(request, 'project/join.html', context)
+

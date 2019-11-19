@@ -4,6 +4,9 @@
 <div class="card w-50" >
 	<div class="card-body">
 	<form method="POST">
+		{% if duplicate == 'True' %}
+			<h3>The project already exists, or the project name is already taken.</h3>
+		{% endif %}
 	    {% csrf_token %}
 	    {% for f in form %}
 	    <div class="col">
@@ -32,7 +35,7 @@
 			</select>
 		</div>
 		<br>
-		<h6>If you do not select developers, you will have to refill this form.</h6>
+		<h6>Please remember to select developers.</h6>
 		<button class="btn btn-outline-info" type="submit">Save</button>
 	</form>
 	</div>
