@@ -5,7 +5,7 @@
 	
 	
 	{%if user.id != None%}
-		{%if user.project_id != null%}
+		{%if user.project != null%}
 			<h1>ONGOING PROJECT</h1>
 		{%endif%}
 	{%else%}
@@ -18,7 +18,7 @@
 
 
 {% for project in projects %}
-	{%if user.project_id == project%}
+	{%if user.project == project%}
 		<h2><a href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
 		<p align="justify">Project detail: {{ project.details }}</p>
 
@@ -32,7 +32,7 @@
 {% endfor %}
 	
 {%if user.position == '3'%}
-	{%if user.project_id == null%}
+	{%if user.project == null%}
 		<h1>NO PROJECT AT THE MOMENT</h1>
 		<br>
 		<a class="btn btn-outline-info" href="{% url 'project-create' %}">Create Project</a>

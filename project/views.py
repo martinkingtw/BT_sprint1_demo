@@ -21,8 +21,8 @@ class ProjectListView(ListView):
 
 
 def redirect_to_home(request):
-	if request.user.project_id:
-		return HttpResponseRedirect(reverse('productBacklog-home',kwargs={'project': slugify(request.user.project_id.title)}))
+	if request.user.project:
+		return HttpResponseRedirect(reverse('productBacklog-home',kwargs={'project': slugify(request.user.project.title)}))
 	
 	return HttpResponseRedirect(reverse('project-home'))
 
