@@ -21,7 +21,7 @@
 			<h3>Select Scrum Master</h3>
 			<select name="sm">
 				{% for sm in SM %}
-				<option value="{{sm}}">{{ sm.username }}</option>
+				<option value="{{sm.pk}}">{{ sm.username }}</option>
 				{% endfor %}
 			</select>
 		</div>
@@ -30,7 +30,7 @@
 			<h3>Select Developers</h3>
 			<select name="d" multiple>
 				{% for d in D %}
-				<option value="{{d}}">{{ d.username }}</option>
+				<option value="{{d.pk}}">{{ d.username }}</option>
 				{% endfor %}
 			</select>
 		</div>
