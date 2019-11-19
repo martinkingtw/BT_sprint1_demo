@@ -1,11 +1,12 @@
 {% extends "base_noSidebar.html" %}
+{% load user_project %}
 {% block content %}
 
 
-	
+{%user_project request as pp%}
 	
 	{%if user.id != None%}
-		{%if user.project != null%}
+		{%if pp != null%}
 			<h1>ONGOING PROJECT</h1>
 		{%endif%}
 	{%else%}
@@ -15,24 +16,26 @@
 	          		<a href="{% url 'register'%}">Register</a></h5>
 	{%endif%}
 
+{%all_project request as ap%}
 
 
-{% for project in projects %}
-	{%if user.project == project%}
+{%if user.is_authenticated %}
+	{% for project in ap %}
+		
 		<h2><a href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
 		<p align="justify">Project detail: {{ project.details }}</p>
 
-	
+		
 		{%if user.position == '1'%}
 			<a class="btn btn-outline-danger" href="{% url 'project-delete' project.slug %}">Delete project</a>
 		{%endif%}
-	{%endif%}
 
-	<br/>
-{% endfor %}
+		<br>
+	{% endfor %}
+{%endif%}
 	
 {%if user.position == '3'%}
-	{%if user.project == null%}
+	{%if pp == null%}
 		<h1>NO PROJECT AT THE MOMENT</h1>
 		<br>
 		<a class="btn btn-outline-info" href="{% url 'project-create' %}">Create Project</a>

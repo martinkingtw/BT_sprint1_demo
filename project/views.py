@@ -21,10 +21,18 @@ class ProjectListView(ListView):
 
 
 def redirect_to_home(request):
-	if request.user.project:
-		return HttpResponseRedirect(reverse('productBacklog-home',kwargs={'project': slugify(request.user.project.title)}))
+
+	if request.user.position == '2':
+		return HttpResponseRedirect(reverse('project-home'))
+	elif request.user.project.first():
+		return HttpResponseRedirect(reverse('productBacklog-home',kwargs={'project': slugify(request.user.project.first().title)}))
+
+	else:
+		return HttpResponseRedirect(reverse('project-home'))
+
+
 	
-	return HttpResponseRedirect(reverse('project-home'))
+		
 
 class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 	model = Project
@@ -47,7 +55,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 		else:
 			context['duplicate'] = 'False'
 		context['SM'] = self.users.filter(position=2)
-		context['D'] = self.users.filter(position=3, project_id=None).exclude(pk=self.self.pk)
+		context['D'] = self.users.filter(position=3, project=None).exclude(pk=self.self.pk)
 		return context
 
 	def get_success_url(self):
@@ -55,7 +63,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 			self.object.delete()
 			return reverse('project-create')
 		self.self.position = 1
-		self.self.project_id = Project.objects.get(pk=self.object.pk)
+		self.self.project = Project.objects.get(pk=self.object.pk)
 		self.self.save()
 		msg = 'Are you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
 		url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + self.info['sm']

@@ -212,7 +212,7 @@ class PBDeleteView(UserPassesTestMixin,DeleteView):
 	model = PBI
 	template_name = 'productBacklog/delete.html'
 	def get_success_url(self):
-		return '/' + str(self.project.slug) + '-product/unfinished'
+		return '/' + str(self.project.slug) + '/unfinished'
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
