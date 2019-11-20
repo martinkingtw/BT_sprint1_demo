@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from project.models import Project
 from productBacklog.models import PBI
 from sprintBacklog.models import Sprint, Task
+from sprintBacklog.forms import TaskForm
 from datetime import timedelta, date
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -219,33 +220,6 @@ class SprintBacklogUpdateView(UserPassesTestMixin,UpdateView):
 			return True
 		return False
 
-class TaskCreateView(CreateView):
-	model = Task
-	fields = [
-		'title',
-		'effort',
-		'task_owner',
-		'details',
-	]
-	template_name = 'sprintBacklog/task_form.html'
-
-	def dispatch(self, request, *args, **kwargs):
-		self.project = get_object_or_404(Project, slug=kwargs['project'])
-		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
-		self.PBI = PBI.objects.get(pk=kwargs['PBI'])
-		return super().dispatch(request, *args, **kwargs)
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['PBI'] = self.PBI
-		context['project'] = self.project
-		return context
-
-	def form_valid(self, form):
-		form.instance.sprint = self.sprint
-		form.instance.PBI = self.PBI
-		return super(TaskCreateView, self).form_valid(form)
-
 
 
 
@@ -270,17 +244,37 @@ class TaskDetailView(DetailView):
 		context['editable'] = self.task.editable()
 		return context
 
+class TaskCreateView(CreateView):
+	model = Task
+	form_class = TaskForm
+	template_name = 'sprintBacklog/task_form.html'
+
+	def dispatch(self, request, *args, **kwargs):
+		self.project = get_object_or_404(Project, slug=kwargs['project'])
+		self.sprint = Sprint.objects.get(pk=kwargs['sprint'])
+		self.PBI = PBI.objects.get(pk=kwargs['PBI'])
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['PBI'] = self.PBI
+		context['project'] = self.project
+		return context
+
+	def form_valid(self, form):
+		form.instance.sprint = self.sprint
+		form.instance.PBI = self.PBI
+		return super(TaskCreateView, self).form_valid(form)
+
+	def get_form_kwargs(self, **kwargs):
+		form_kwargs = super(TaskCreateView, self).get_form_kwargs(**kwargs)
+		form_kwargs["project"] = self.project
+		return form_kwargs
 
 
 class TaskUpdateView(UserPassesTestMixin,UpdateView):
 	model =  Task
-	fields = [
-		'title',
-		'task_owner',
-		'status',
-		'effort',
-		'details',
-	]
+	form_class = TaskForm
 
 	def dispatch(self, request, *args, **kwargs):
 		self.project = get_object_or_404(Project, slug=kwargs['project'])
@@ -296,6 +290,11 @@ class TaskUpdateView(UserPassesTestMixin,UpdateView):
 		if task.task_owner == self.request.user:
 			return True
 		return False
+
+	def get_form_kwargs(self, **kwargs):
+		form_kwargs = super(TaskUpdateView, self).get_form_kwargs(**kwargs)
+		form_kwargs["project"] = self.project
+		return form_kwargs
 
 
 class TaskDeleteView(UserPassesTestMixin,DeleteView):
