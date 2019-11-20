@@ -12,7 +12,6 @@ from .models import PBI, Project
 from sprintBacklog.models import Task
 from django.shortcuts import get_object_or_404
 from datetime import timedelta, date
-from users.models import Profile
 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseRedirect
