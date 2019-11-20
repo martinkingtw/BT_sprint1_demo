@@ -33,4 +33,4 @@ class PBI(models.Model):
 		super().save(*args, **kwargs)
 
 	def editable(self):
-		return not (self.status == 'Doing' or self.status == 'Done')
+		return self.status == 'Doing' or self.status == 'Done'
