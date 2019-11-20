@@ -63,7 +63,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 			self.object.delete()
 			return reverse('project-create')
 		self.self.position = 1
-		self.self.project = Project.objects.get(pk=self.object.pk)
+		self.self.project.add(Project.objects.get(pk=self.object.pk))
 		self.self.save()
 		msg = 'Are you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
 		url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + self.info['sm']
@@ -148,7 +148,7 @@ def join(request, project, user):
 	except:
 		return render(request, 'project/noProject.html', {})
 	joiner = User.objects.get(pk=user)
-	joiner.project_id = Project.objects.get(pk=project)
+	joiner.project_id.add(Project.objects.get(pk=project))
 	joiner.save()
 	return render(request, 'project/join.html', context)
 
