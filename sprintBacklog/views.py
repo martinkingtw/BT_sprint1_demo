@@ -287,7 +287,7 @@ class TaskUpdateView(UserPassesTestMixin,UpdateView):
 
 	def test_func(self):
 		task = self.get_object()
-		if task.task_owner == self.request.user:
+		if task.task_owner == self.request.user or task.task_owner == None:
 			return True
 		return False
 
@@ -317,7 +317,7 @@ class TaskDeleteView(UserPassesTestMixin,DeleteView):
 
 	def test_func(self):
 		task = self.get_object()
-		if task.task_owner == self.request.user:
+		if task.task_owner == self.request.user or task.task_owner == None:
 			return True
 		return False
 
