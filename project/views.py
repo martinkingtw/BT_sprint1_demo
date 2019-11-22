@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import (
 	ListView, 
@@ -140,7 +141,10 @@ class ProjectDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
 	# 	return context
 
 
+@login_required
 def join(request, project, user):
+	if request.user.pk != user:
+		return render(request, 'project/noPermit.html', {})
 	try:
 		context = {
 			'project': Project.objects.get(pk=project),
@@ -148,7 +152,12 @@ def join(request, project, user):
 	except:
 		return render(request, 'project/noProject.html', {})
 	joiner = User.objects.get(pk=user)
-	joiner.project_id.add(Project.objects.get(pk=project))
+	if joiner.position == '2':
+		joiner.project.add(Project.objects.get(pk=project))
+	elif not joiner.project.exists():
+		joiner.project.add(Project.objects.get(pk=project))
+	else:
+		return render(request, 'project/noPermit.html', {})
 	joiner.save()
 	return render(request, 'project/join.html', context)
 

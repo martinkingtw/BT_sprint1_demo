@@ -52,7 +52,7 @@ class SprintBacklogListView(ListView):
 	context_object_name = 'sprint'
 
 	def get_queryset(self):
-		queryset = Sprint.objects.filter(project_id=self.project).order_by('pk')
+		queryset = Sprint.objects.filter(project=self.project).order_by('pk')
 		index = 1
 		for s in queryset:
 			s.title = "Sprint" + str(index)
