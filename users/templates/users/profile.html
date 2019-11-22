@@ -6,6 +6,13 @@
       <div class="media">
 
         <div class="media-body">
+          {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags}}">
+              {{ message }}
+            </div>
+            {% endfor %}
+          {% endif %}
 
           <p class="text-secondary">Username: {{ user.username }}</p>
           <p class="text-secondary">Full name: {{ user.first_name }} {{ user.last_name }}</p>
