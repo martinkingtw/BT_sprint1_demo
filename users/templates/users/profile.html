@@ -1,11 +1,14 @@
 {% extends "base_register.html" %} 
 {% load crispy_forms_tags %}
 {%block content%}
+  <h1>USER PROFILE</h1>
 	<div class="content-section">
       <div class="media">
+
         <div class="media-body">
+
           <p class="text-secondary">Username: {{ user.username }}</p>
-            <p class="text-secondary">Full name: {{ user.first_name }} {{ user.last_name }}</p>
+          <p class="text-secondary">Full name: {{ user.first_name }} {{ user.last_name }}</p>
           <p class="text-secondary">Email: {{ user.email }}</p> 
           <p class="text-secondary">Joining Date: {{ user.date_joined }}</p> 
      
@@ -16,20 +19,40 @@
               b = document.getElementById("display");
 
               if (position == 2){
-                b.innerHTML = "position: Scrum Master";
+                b.innerHTML = "Position: Scrum Master";
               }
               else if (position == 1){
-                b.innerHTML = "position: Product Owner";
+                b.innerHTML = "Position: Product Owner";
               }
               else if (position == 3){
-                b.innerHTML = "position: Developer";
+                b.innerHTML = "Position: Developer";
               }
               
               
           </script>
         </div>
       </div>
-      <!-- FORM HERE -->
-    </div>
 
+    </div>
+  
+    <br>
+    <br>
+
+    <div class="content-section">
+          <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+              <legend class="border-bottom mb-4"> Update Profile</legend>
+              {{ u_form|crispy }}
+              
+
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">
+                  Update
+                </button>
+                
+            </div>
+          </form>
+    </div>
 {%endblock content %}
