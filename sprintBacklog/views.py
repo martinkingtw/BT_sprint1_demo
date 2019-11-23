@@ -125,7 +125,7 @@ class SprintBacklogCreateView(UserPassesTestMixin,CreateView):
 		return super().form_valid(form)
 
 	def test_func(self):
-		if self.request.user.position == '1':
+		if self.request.user.position == '3':
 			return True
 		return False
 
@@ -195,7 +195,7 @@ class SprintBacklogDeleteView(UserPassesTestMixin,DeleteView):
 		return super().post(request, *args, **kwargs)
 
 	def test_func(self):
-		if self.request.user.position == '1':
+		if self.request.user.position == '3':
 			return True
 		return False
 
@@ -216,7 +216,7 @@ class SprintBacklogUpdateView(UserPassesTestMixin,UpdateView):
 		return context
 
 	def test_func(self):
-		if self.request.user.position == '1':
+		if self.request.user.position == '3':
 			return True
 		return False
 
