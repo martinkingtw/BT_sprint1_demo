@@ -45,6 +45,7 @@ class Sprint(models.Model):
 
 	def startSprint(self):
 		self.status = 'Started'
+		self.start_date = date.today()
 		self.save()
 		for i in PBI.objects.filter(sprint=self):
 			i.status = "Doing"

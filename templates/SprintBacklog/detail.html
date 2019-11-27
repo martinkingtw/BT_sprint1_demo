@@ -15,7 +15,7 @@
     		<p class="mb-3" style="text-align: justify;" >{{ sprint.details }}</p>
 	    	<div class="toolbar">
 	    	{% if sprint.status == "Not Started" %}
-				{%if user.position == '1'%}
+				{%if user.position == '3'%}
 	    			<a class= "btn btn-outline-info" role="button" href="{% url 'sprintBacklog-edit' project.slug sprint.pk %}">Edit</a>
 	    			<a class="btn btn-outline-danger" role="button" href="{% url 'sprintBacklog-delete' project.slug sprint.pk %}">Delete</a>
 	    		{%endif%}

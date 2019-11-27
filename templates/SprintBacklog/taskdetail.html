@@ -24,7 +24,7 @@
 	    				<a class= "btn btn-outline-info" href="{% url 'task-update' project.slug sprint.pk task.pk %}">Edit</a>
 	    				<a class="btn btn-outline-danger" href="{% url 'task-delete' project.slug sprint.pk task.pk %}">Delete</a>
 	    			{%else%}
-	    				<h6 style="color:red;">You are not task owner. Cant edit or delete.</h6>
+	    				<p class="text-danger font-italic">You are not task owner. Cant edit or delete.</p>
 					{%endif%}
 	    		
 	    		
