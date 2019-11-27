@@ -66,7 +66,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 		self.self.position = 1
 		self.self.project.add(Project.objects.get(pk=self.object.pk))
 		self.self.save()
-		msg = 'Are you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
+		msg = 'Scrum Master: \nAre you interested in joining ' + self.info['title'] + '? If it is the case, please click the following links!\n'
 		url = 'http://127.0.0.1:8000/' + 'join/' + str(self.object.pk) + '/' + self.info['sm']
 		msg += url
 		email = []
@@ -90,7 +90,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 				'mkmuzha@gmail.com',
 				email,
 			)
-			return super(ProjectCreateView, self).get_success_url()
+		return super(ProjectCreateView, self).get_success_url()
 
 	def post(self, request, *args, **kwargs):
 		self.info = request.POST
