@@ -20,7 +20,7 @@ class PBI(models.Model):
 	ESP = models.IntegerField("estimated story point")
 	details = models.TextField()
 	project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
-	sprint = models.ManyToManyField(Sprint) # , blank=True, null=True, default=None)
+	sprint = models.ManyToManyField(Sprint, blank=True, null=True, default=None)
 
 	def __str__(self):
 		return self.title

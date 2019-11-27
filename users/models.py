@@ -42,7 +42,7 @@ class User(AbstractBaseUser):
 
 
 
-	email				=	models.EmailField(verbose_name="email",max_length=60, unique=True)
+	email				=	models.EmailField(verbose_name="email",max_length=60, unique=False)
 	position			=	models.CharField(
 								max_length=32,
 
@@ -56,11 +56,10 @@ class User(AbstractBaseUser):
 	is_active			=	models.BooleanField(default=True)
 	is_staff			=	models.BooleanField(default=False)
 	is_superuser		=	models.BooleanField(default=False)
-	project				= 	models.ManyToManyField(Project)
+	project				= 	models.ManyToManyField(Project, blank=True, null=True)
 
 
-	USERNAME_FIELD	=	'email'
-	REQUIRED_FIELDS	=	['username',]
+	USERNAME_FIELD	=	'username'
 
 
 	objects = MyAccountManager()
