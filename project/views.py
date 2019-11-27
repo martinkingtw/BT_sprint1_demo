@@ -90,7 +90,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 				'mkmuzha@gmail.com',
 				email,
 			)
-			return super(ProjectCreateView, self).get_success_url()
+		return super(ProjectCreateView, self).get_success_url()
 
 	def post(self, request, *args, **kwargs):
 		self.info = request.POST
