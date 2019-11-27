@@ -24,14 +24,12 @@
 					<a class="btn btn-outline-danger" role="button" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
 				{% else %}
 						
-					
-						<a class= "btn btn-outline-info disabled" role="button" aria-disabled="true" href="{% url 'productBacklog-update' project.slug PBI.pbi.pk%}">Edit</a>
-						<a class="btn btn-outline-danger disabled" role="button" aria-disabled="true" href="{% url 'productBacklog-delete' project.slug PBI.pbi.pk%}">Delete</a>
+					<h6 style="color:red;">This Product Backlog Item is not editable. </h6>
 					
 				{% endif %}
 
 			{%else%}
-					<h6 style="color:red;">You are not product onwer, can't edit or delete. </h6>
+					<h6 style="color:red;">You are not product owner, can't edit or delete. </h6>
 			{%endif%}
 
 
