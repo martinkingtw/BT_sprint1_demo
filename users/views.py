@@ -9,7 +9,8 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 
-
+from django.views.generic import ListView
+from users.models import User
 
 def register(request):
 	context = {}
@@ -50,3 +51,10 @@ def profile(request):
 
 	return render(request, 'users/profile.html',{'u_form':u_form})
 
+
+def user_list(request):
+	all_users = User.objects.order_by('username')
+
+	context ={'users':all_users}
+
+	return render(request, 'users/list.html', context)

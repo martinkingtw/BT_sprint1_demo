@@ -1,0 +1,26 @@
+{% extends "base_noSidebar.html" %}
+{% block content %}
+
+	<h3>List of all managers</h3>
+
+	{%for user in users%}
+		{%if user.position == '2'%}
+		<a href="#">{{user.username}}</a>
+		<br>
+		{%endif%}
+	{%endfor%}
+
+	<br>
+
+	<h3>List of all developers</h3>
+	
+
+	{%for user in users%}
+		{%if user.position == '3' or user.position == '1'%}
+		<a href="#">{{user.username}}</a>
+		<br>
+		{%endif%}
+	{%endfor%}
+
+
+{% endblock content %}

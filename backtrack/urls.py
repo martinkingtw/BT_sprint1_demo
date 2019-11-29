@@ -25,6 +25,7 @@ from project import views
 
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/',user_views.register, name='register'),
@@ -47,6 +48,7 @@ urlpatterns = [
     path('<slug:project>-sprint_', include('sprintBacklog.urls')),
     path('', include('project.urls')),
     path('join/<int:project>/<int:user>', views.join, name='join'),
+    path('list/',user_views.user_list,name='user_list'),
 
 
 ]
