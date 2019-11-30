@@ -1,11 +1,28 @@
 {% extends "base_noSidebar.html" %}
 {% block content %}
 
+
+	<h3>List of all product owner</h3>
+
+
+	{%for user in users%}
+		{%if user.position == '1'%}
+		<a href="{% url 'user-detail' user.pk%}">{{user.username}}</a>
+		<br>
+		{%endif%}
+	{%endfor%}
+
+	<br>
+	
+
+
+
 	<h3>List of all managers</h3>
+
 
 	{%for user in users%}
 		{%if user.position == '2'%}
-		<a href="#">{{user.username}}</a>
+		<a href="{% url 'user-detail' user.pk%}">{{user.username}}</a>
 		<br>
 		{%endif%}
 	{%endfor%}
@@ -16,8 +33,8 @@
 	
 
 	{%for user in users%}
-		{%if user.position == '3' or user.position == '1'%}
-		<a href="#">{{user.username}}</a>
+		{%if user.position == '3' %}
+		<a href="{% url 'user-detail' user.pk%}">{{user.username}}</a>
 		<br>
 		{%endif%}
 	{%endfor%}

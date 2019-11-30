@@ -21,12 +21,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from project import views
 
+from users.views import UserDetailView
+
 
 
 
 
 
 urlpatterns = [
+    path('detail_of_user/<int:pk>/',UserDetailView.as_view(), name='user-detail'),
     path('admin/', admin.site.urls),
     path('register/',user_views.register, name='register'),
     path('profile/',user_views.profile , name='profile'),
@@ -49,6 +52,7 @@ urlpatterns = [
     path('', include('project.urls')),
     path('join/<int:project>/<int:user>', views.join, name='join'),
     path('list/',user_views.user_list,name='user_list'),
+
 
 
 ]

@@ -1,0 +1,28 @@
+{% extends "base_noSidebar.html" %}
+{% block content %}
+
+	<h3>Username: {{user.username}}</h3>
+
+	
+	
+	<h4>Full name: {{ user.first_name }} {{ user.last_name }}</h4>
+
+	<h4>Email: {{user.email}}</h4>
+
+	{%if user.position == '2'%}
+		<h4>position: manager</h4>
+	
+	{%endif%}
+
+	{%if user.position == '3'%}
+		<h4>position: developer</h4>
+	{%endif%}
+
+
+	
+
+	
+	
+
+
+{% endblock content %}

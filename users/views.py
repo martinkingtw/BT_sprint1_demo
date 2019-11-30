@@ -9,7 +9,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 
-from django.views.generic import ListView
+from django.views.generic import DetailView
 from users.models import User
 
 def register(request):
@@ -58,3 +58,9 @@ def user_list(request):
 	context ={'users':all_users}
 
 	return render(request, 'users/list.html', context)
+
+
+class UserDetailView(DetailView):
+	model = User
+	template_name = 'users/detail.html'
+	context_object_name = 'user'
