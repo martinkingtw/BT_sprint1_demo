@@ -44,9 +44,20 @@
 		<h1>No Project at the moment</h1>
 		<br>
 		<a class="btn btn-outline-info" href="{% url 'project-create' %}">Create Project</a>
+		<br>
+		<br>
 	{%endif%}
+
 {%endif%}
 	
 
+
+<br>
+
+
+<a href="{% url 'user_list' %}">View the list of all users</a>
+
+<br>
+<br>
 
 {% endblock content %}

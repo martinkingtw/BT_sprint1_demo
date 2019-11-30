@@ -4,24 +4,28 @@
 	<h3>Username: {{user.username}}</h3>
 
 	
-	
-	<h4>Full name: {{ user.first_name }} {{ user.last_name }}</h4>
+	<br>
+	<br>
+	<h5>Full name: {{ user.first_name }} {{ user.last_name }}</h5>
 
-	<h4>Email: {{user.email}}</h4>
+	<h5>Email: {{user.email}}</h5>
+	
+
+	{%if user.position == '1'%}
+		<h5>position: product owner</h5>
+	{%endif%}
 
 	{%if user.position == '2'%}
-		<h4>position: manager</h4>
+		<h5>position: manager</h5>
 	
 	{%endif%}
 
 	{%if user.position == '3'%}
-		<h4>position: developer</h4>
+		<h5>position: developer</h5>
 	{%endif%}
 
 
-	
 
-	
 	
 
 
