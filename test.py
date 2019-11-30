@@ -24,35 +24,35 @@ name = ["Henry", "Martin", "Ben", "Steven", "Eric", "BugDeveloper", "BugManager"
 status = ["To Do", "Doing", "Done"]
 #fill this in (pbi,sprint,task to be included in sprint 3) ##########
 priority = [1, 2, 3, 4, 5]
-title = ["log-in and log-out functionality", "Create new project", "invite developer", "invite manager", "individual time-tracking"]
+title = ["log-in and log-out functionality", "Create new project", "Invite developer", "Invite manager", "Individual time-tracking"]
 """
 	title, effort, owner, status
 	template: ("taskA", 10, name[0], status[0])
 	index for name : 0 - 3
 """
 #ALL TO-Do
-task = [[ ("Create user object for registration", 8, name[0], status[0]), ("create login system to grant access", 10, name[3], status[0]) ], # pbi 1
-	[ ("interface for user to insert details to create project", 6, name[1], status[0]), ("Permitted user can access project after project creation", 4, name[2], status[0]) ], # pbi 2
-	[ ("send invitation email to selected developers", 5, name[2], status[0]), ("include invited developer to the project after confirmation", 3, name[1], status[0]) ], # pbi 3
-	[ ("send invitation email to selected manager", 2, name[3], status[0]), ("include invited manager into porject after confirmation", 2, name[0], status[0]) ], # pbi 4
-	[ ("access profile of developer", 4, name[0], status[0]), ("create a profile showing the details of workload(task working, time spent) of a developer", 6, name[0], status[0]) ] # pbi 5
-       ]
-"""
+# task = [[ ("create user object for registration", 8, name[0], status[0]), ("create login system to grant access", 10, name[3], status[0]) ], # pbi 1
+# 	[ ("interface for user to insert details to create project", 6, name[1], status[0]), ("permitted user can access project after project creation", 4, name[2], status[0]) ], # pbi 2
+# 	[ ("send invitation email to selected developers", 5, name[2], status[0]), ("include invited developer to the project after confirmation", 3, name[1], status[0]) ], # pbi 3
+# 	[ ("send invitation email to selected manager", 2, name[3], status[0]), ("include invited manager into porject after confirmation", 2, name[0], status[0]) ], # pbi 4
+# 	[ ("access profile of developer", 4, name[0], status[0]), ("create a profile showing the details of workload of a developer", 6, name[0], status[0]) ] # pbi 5
+#        ]
+
 #middle of sprint
-task = [[ ("Create user object for registration", 8, name[0], status[2]), ("create login system to grant access", 10, name[3], status[1]) ], # pbi 1
-	[ ("interface for user to insert details to create project", 6, name[1], status[1]), ("Permitted user can access project after project creation", 4, name[2], status[0]) ], # pbi 2
-	[ ("send invitation email to selected developers", 5, name[2], status[2]), ("include invited developer to the project after confirmation", 3, name[1], status[1]) ], # pbi 3
-	[ ("send invitation email to selected manager", 2, name[3], status[1]), ("include invited manager into porject after confirmation", 2, name[0], status[1]) ], # pbi 4
-	[ ("access profile of developer", 4, name[0], status[0]), ("create a profile showing the details of workload(task working, time spent) of a developer", 6, name[0], status[2]) ] # pbi 5
-       ]
+# task = [[ ("create user object for registration", 8, name[0], status[2]), ("create login system to grant access", 10, name[3], status[1]) ], # pbi 1
+# 	[ ("interface for user to insert details to create project", 6, name[1], status[1]), ("permitted user can access project after project creation", 4, name[2], status[0]) ], # pbi 2
+# 	[ ("send invitation email to selected developers", 5, name[2], status[2]), ("include invited developer to the project after confirmation", 3, name[1], status[1]) ], # pbi 3
+# 	[ ("send invitation email to selected manager", 2, name[3], status[1]), ("include invited manager into porject after confirmation", 2, name[0], status[1]) ], # pbi 4
+# 	[ ("access profile of developer", 4, name[0], status[0]), ("create a profile showing the details of workload of a developer", 6, name[0], status[1]) ] # pbi 5
+#        ]
 #all done
-task = [[ ("Create user object for registration", 8, name[0], status[2]), ("create login system to grant access", 10, name[3], status[2]) ], # pbi 1
-	[ ("interface for user to insert details to create project", 6, name[1], status[2]), ("Permitted user can access project after project creation", 4, name[2], status[2]) ], # pbi 2
+task = [[ ("create user object for registration", 8, name[0], status[2]), ("create login system to grant access", 10, name[3], status[2]) ], # pbi 1
+	[ ("interface for user to insert details to create project", 6, name[1], status[2]), ("permitted user can access project after project creation", 4, name[2], status[2]) ], # pbi 2
 	[ ("send invitation email to selected developers", 5, name[2], status[2]), ("include invited developer to the project after confirmation", 3, name[1], status[2]) ], # pbi 3
 	[ ("send invitation email to selected manager", 2, name[3], status[2]), ("include invited manager into porject after confirmation", 2, name[0], status[2]) ], # pbi 4
-	[ ("access profile of developer", 4, name[0], status[2]), ("create a profile showing the details of workload(task working, time spent) of a developer", 6, name[0], status[2]) ] # pbi 5
+	[ ("access profile of developer", 4, name[0], status[2]), ("create a profile showing the details of workload of a developer", 6, name[0], status[0]) ] # pbi 5
        ]
-"""
+
 #####################################################################
 
 ESP = 0 
