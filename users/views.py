@@ -60,6 +60,15 @@ def user_list(request):
 	return render(request, 'users/list.html', context)
 
 
+
+def project_user_list(request):
+	all_users = User.objects.order_by('username')
+
+	context ={'users':all_users}
+
+	return render(request, 'users/list_of_that_project.html', context)
+
+
 class UserDetailView(DetailView):
 	model = User
 	template_name = 'users/detail.html'

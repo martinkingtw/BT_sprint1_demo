@@ -27,9 +27,18 @@
 {%if user.is_authenticated %}
 	{% for project in ap %}
 		<div class="content-section">
-		<h2><a class="text-info text-decoration-none" href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}</a></h2>
+		<h2><a class="text-info text-decoration-none" href="{% url 'productBacklog-home' project.slug %}">{{ project.title }}  </a></h2>
+
+		
+
 		<div class="border-top pt-3">
-			<p align="justify">{{ project.details }}</p>
+			{%if user.position != '2'%}
+				<a href="{%url 'project_user_list' %}">participated users</a>
+				<br>
+				<br>
+			{%endif%}
+
+			<p align="justify">Description: {{ project.details }}</p>
 		
 			{%if user.position == '1'%}
 				<a class="btn btn-outline-danger" href="{% url 'project-delete' project.slug %}">Delete project</a>
@@ -54,10 +63,12 @@
 
 <br>
 
+{%if user.id != None%}
+	
+	<a href="{% url 'user_list' %}">View the list of all users</a>
 
-<a href="{% url 'user_list' %}">View the list of all users</a>
-
-<br>
-<br>
+	<br>
+	<br>
+{%endif%}
 
 {% endblock content %}

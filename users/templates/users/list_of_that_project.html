@@ -1,0 +1,63 @@
+{% extends "base_noSidebar.html" %}
+{% load user_of_that_project %}
+{% block content %}
+
+	{%project_developer request as kk%}
+
+
+	<h1>Project Name: {{kk}}</h1>
+	<br>
+	<br>
+	<br>
+
+	<h3>Product Owner</h3>
+
+
+	{%for user in users%}
+		{%if user.position == '1'%}
+			{%for project in user.project.all%}
+				{%if project == kk%}
+				<a href="{% url 'user-detail' user.pk%}">{{user.username}} </a>
+				<br>
+				{%endif%}
+			{%endfor%}
+		{%endif%}
+	{%endfor%}
+
+	<br>
+	
+
+
+
+	<h3>Manager</h3>
+
+
+	{%for user in users%}
+		{%if user.position == '2'%}
+			{%for project in user.project.all%}
+				{%if project == kk%}
+				<a href="{% url 'user-detail' user.pk%}">{{user.username}} </a>
+				<br>
+				{%endif%}
+			{%endfor%}
+		{%endif%}
+	{%endfor%}
+
+	<br>
+
+	<h3>List of developers</h3>
+	
+
+	{%for user in users%}
+		{%if user.position == '3'%}
+			{%for project in user.project.all%}
+				{%if project == kk%}
+				<a href="{% url 'user-detail' user.pk%}">{{user.username}} </a>
+				<br>
+				{%endif%}
+			{%endfor%}
+		{%endif%}
+	{%endfor%}
+
+
+{% endblock content %}
