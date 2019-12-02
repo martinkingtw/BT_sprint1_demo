@@ -52,7 +52,7 @@ urlpatterns = [
     path('', include('project.urls')),
     path('join/<int:project>/<int:user>', views.join, name='join'),
     path('list/',user_views.user_list,name='user_list'),
-    path('project_list/',user_views.project_user_list, name='project_user_list'),
+
 
 
 

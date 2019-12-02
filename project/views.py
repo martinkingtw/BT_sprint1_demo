@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import (
 	ListView, 
 	CreateView, 
-	DeleteView
+	DeleteView,
+	DetailView
 )
 from productBacklog.models import Project
 
@@ -19,7 +20,17 @@ class ProjectListView(ListView):
 	template_name = 'project/home.html'
 	context_object_name = 'projects'
 
+class UserListDetailView(DetailView):
+	model = Project
+	template_name = 'project/user_list.html'
+	context_object_name = 'project_check'
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context.update({
+            'users': User.objects.all(),
+        })
+		return context
 
 def redirect_to_home(request):
 

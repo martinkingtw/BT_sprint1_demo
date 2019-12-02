@@ -32,11 +32,9 @@
 		
 
 		<div class="border-top pt-3">
-			{%if user.position != '2'%}
-				<a href="{%url 'project_user_list' %}">participated users</a>
-				<br>
-				<br>
-			{%endif%}
+			
+			<a href="{% url 'user-list-for-project' project.pk%}">participated users</a>
+			
 
 			<p align="justify">Description: {{ project.details }}</p>
 		
