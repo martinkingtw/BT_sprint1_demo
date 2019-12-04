@@ -17,7 +17,13 @@
           <p class="text-secondary">Username: {{ user.username }}</p>
           <p class="text-secondary">Full name: {{ user.first_name }} {{ user.last_name }}</p>
           <p class="text-secondary">Email: {{ user.email }}</p> 
-          <p class="text-secondary">Joining Date: {{ user.date_joined }}</p> 
+          <p class="text-secondary">Joining Date: {{ user.date_joined }}</p>
+
+          {%if user.position == '3'%}
+
+			<p class="text-secondary">Latest velocity: {{ velocity }} (hours)</p>
+
+		  {%endif%}
      
           <div class="text-secondary" id="display"></div>
 
@@ -37,7 +43,9 @@
               
               
           </script>
+
         </div>
+
       </div>
 
     </div>

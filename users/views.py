@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.views.generic import DetailView
 from users.models import User
+from sprintBacklog.models import Sprint, Task
 
 def register(request):
 	context = {}
@@ -37,6 +38,24 @@ def register(request):
 
 @login_required
 def profile(request):
+
+	context = {}
+	context['user'] = request.user
+	if context['user'].position == '3':
+		if context['user'].project.exists():
+			try:
+				sprint = Sprint.objects.filter(project=context['user'].project.latest('pk')).latest('pk')
+				tasks = Task.objects.filter(sprint=sprint)
+				context['velocity'] = 0
+				for task in tasks:
+					if task.task_owner.pk == context['user'].pk:
+						if task.status == 'Done':
+							context['velocity'] += task.effort
+			except:
+				context['velocity'] = 'No data available'
+	if not context['velocity']:
+		context['velocity'] = 'No data available'
+
 	if request.method == 'POST':
 		u_form = UserUpdateForm(request.POST,instance=request.user)
 
@@ -48,8 +67,9 @@ def profile(request):
 	else:
 		u_form = UserUpdateForm(instance=request.user)
 
+	context['u_form'] = u_form
 
-	return render(request, 'users/profile.html',{'u_form':u_form})
+	return render(request, 'users/profile.html', context)
 
 
 def user_list(request):
@@ -68,6 +88,24 @@ class UserDetailView(DetailView):
 	model = User
 	template_name = 'users/detail.html'
 	context_object_name = 'user'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if context['user'].position == '3':
+			if context['user'].project.exists():
+				try:
+					sprint = Sprint.objects.filter(project=context['user'].project.latest('pk')).latest('pk')
+					tasks = Task.objects.filter(sprint=sprint)
+					context['velocity'] = 0
+					for task in tasks:
+						if task.task_owner.pk == context['user'].pk:
+							if task.status == 'Done':
+								context['velocity'] += task.effort
+				except:
+					context['velocity'] = 'No data available'
+		if not context['velocity']:
+			context['velocity'] = 'No data available'
+		return context
 
 
 
