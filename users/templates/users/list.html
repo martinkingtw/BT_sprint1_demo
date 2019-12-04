@@ -1,8 +1,11 @@
 {% extends "base_noSidebar.html" %}
 {% block content %}
 
+<div class="content-section">
 
-	<h3>Product Owner</h3>
+	<h3>List of Users</h3>
+	<div class="border-top pt-3">
+	<h5>Product Owner</h5>
 
 
 	{%for user in users%}
@@ -12,12 +15,7 @@
 		{%endif%}
 	{%endfor%}
 
-	<br>
-	
-
-
-
-	<h3>Manager</h3>
+	<h5 class="mt-3">Manager</h5>
 
 
 	{%for user in users%}
@@ -27,9 +25,7 @@
 		{%endif%}
 	{%endfor%}
 
-	<br>
-
-	<h3>List of developers</h3>
+	<h5 class="mt-3">Developers</h5>
 	
 
 	{%for user in users%}
@@ -38,6 +34,6 @@
 		<br>
 		{%endif%}
 	{%endfor%}
-
-
+	</div>
+</div>
 {% endblock content %}
