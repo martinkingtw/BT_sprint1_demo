@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from project.models import Project
 from productBacklog.models import PBI
 from sprintBacklog.models import Sprint, Task
-from sprintBacklog.forms import TaskForm
+from sprintBacklog.forms import TaskForm, TaskCreateForm
 from datetime import timedelta, date
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -246,7 +246,7 @@ class TaskDetailView(DetailView):
 
 class TaskCreateView(CreateView):
 	model = Task
-	form_class = TaskForm
+	form_class = TaskCreateForm
 	template_name = 'sprintBacklog/task_form.html'
 
 	def dispatch(self, request, *args, **kwargs):
@@ -270,6 +270,7 @@ class TaskCreateView(CreateView):
 		form_kwargs = super(TaskCreateView, self).get_form_kwargs(**kwargs)
 		form_kwargs["project"] = self.project
 		return form_kwargs
+
 
 
 class TaskUpdateView(UserPassesTestMixin,UpdateView):
