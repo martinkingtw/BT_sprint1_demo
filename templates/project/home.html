@@ -32,11 +32,9 @@
 		
 
 		<div class="border-top pt-3">
-			
-			<a href="{% url 'user-list-for-project' project.pk%}">participated users</a>
-			
-
+						
 			<p align="justify">Description: {{ project.details }}</p>
+			<a href="{% url 'user-list-for-project' project.pk%}">Members</a>
 		
 			{%if user.position == '1'%}
 				<a class="btn btn-outline-danger" href="{% url 'project-delete' project.slug %}">Delete project</a>

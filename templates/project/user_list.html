@@ -4,13 +4,12 @@
 
 
 
+<div class="content-section">
+	<h1>{{project_check}}</h1>
+	<h4 class="text-secondary">Members</h4>
+	<div class="border-top pt-3">
 
-	<h1>Project Name: {{project_check}}</h1>
-	<br>
-	<br>
-	<br>
-
-	<h3>Product Owner</h3>
+	<h5>Product Owner</h5>
 
 
 	{%for user in users%}
@@ -24,12 +23,9 @@
 		{%endif%}
 	{%endfor%}
 
-	<br>
-	
 
 
-
-	<h3>Manager</h3>
+	<h5 class="mt-3" >Manager</h5>
 
 
 	{%for user in users%}
@@ -43,9 +39,8 @@
 		{%endif%}
 	{%endfor%}
 
-	<br>
 
-	<h3>List of developers</h3>
+	<h5 class="mt-3">Developers</h5>
 	
 
 	{%for user in users%}
@@ -58,6 +53,6 @@
 			{%endfor%}
 		{%endif%}
 	{%endfor%}
-
-
+	</div>
+</div>
 {% endblock content %}

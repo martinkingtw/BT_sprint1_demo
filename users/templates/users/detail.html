@@ -1,32 +1,28 @@
 {% extends "base_noSidebar.html" %}
-{% block content %}
+{% block content %}	
+<div class="content-section">
+	<h2>{{user.username}}</h2>
+	<h5 class="text-secondary">Profile</h5>
+	<div class="border-top pt-3">
+          <p class="text-secondary">Full name: {{ user.first_name }} {{ user.last_name }}</p>
+          <p class="text-secondary">Email: {{ user.email }}</p> 
+          <p class="text-secondary">Joining Date: {{ user.date_joined }}</p> 
 
-	<h3>Username: {{user.username}}</h3>
+		{%if user.position == '1'%}
+			<p class="text-secondary">Position: Product owner</p>
+		{%endif%}
 
-	
-	<br>
-	<br>
-	<h5>Full name: {{ user.first_name }} {{ user.last_name }}</h5>
+		{%if user.position == '2'%}
+			<p class="text-secondary">Position: Manager</p>
+		
+		{%endif%}
 
-	<h5>Email: {{user.email}}</h5>
-	
+		{%if user.position == '3'%}
+			<p class="text-secondary">Position: Developer</p>
+		{%endif%}
 
-	{%if user.position == '1'%}
-		<h5>position: product owner</h5>
-	{%endif%}
-
-	{%if user.position == '2'%}
-		<h5>position: manager</h5>
-	
-	{%endif%}
-
-	{%if user.position == '3'%}
-		<h5>position: developer</h5>
-	{%endif%}
-
-
-
-	
+	</div>
+</div>
 
 
 {% endblock content %}
