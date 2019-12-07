@@ -53,6 +53,9 @@ def profile(request):
 							context['velocity'] += task.effort
 			except:
 				context['velocity'] = 'No data available'
+	else:
+		context['velocity'] = 'Not a developer'
+
 	if not context['velocity']:
 		context['velocity'] = 'No data available'
 
@@ -103,6 +106,8 @@ class UserDetailView(DetailView):
 								context['velocity'] += task.effort
 				except:
 					context['velocity'] = 'No data available'
+		else:
+			context['velocity'] = 'Not a developer'
 		if not context['velocity']:
 			context['velocity'] = 'No data available'
 		return context

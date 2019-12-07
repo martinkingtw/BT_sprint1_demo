@@ -125,7 +125,13 @@
 						<a href="{% url 'task-detail' project.slug sprint.pk i.pk %}">
 							<h5 class="card-title">{{ i.title }}</h5>
 						</a>
-						<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+						{% if i.task_owner %}
+						<a href="{% url 'user-detail' i.task_owner.pk %}">
+							<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+						</a>
+						{% else %}
+							<h6 class="card-subtitle mb-2 text-muted">None</h6>
+						{% endif %}
 
 						<p class="card-text" style="text-align: right;">{{ i.effort }} hrs</p>
 					</div>
@@ -140,7 +146,13 @@
 						<a href="{% url 'task-detail' project.slug sprint.pk i.pk %}">
 							<h5 class="card-title">{{ i.title }}</h5>
 						</a>
-						<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+						{% if i.task_owner %}
+						<a href="{% url 'user-detail' i.task_owner.pk %}">
+							<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+						</a>
+						{% else %}
+							<h6 class="card-subtitle mb-2 text-muted">None</h6>
+						{% endif %}
 						<p class="card-text" style="text-align: right;">{{ i.effort }} hrs</p>
 					</div>
 				</div class="card">
@@ -153,7 +165,13 @@
 						<a href="{% url 'task-detail' project.slug sprint.pk i.pk %}">
 							<h5 class="card-title">{{ i.title }}</h5>
 						</a>
-						<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+						{% if i.task_owner %}
+						<a href="{% url 'user-detail' i.task_owner.pk %}">
+							<h6 class="card-subtitle mb-2 text-muted">{{ i.task_owner }}</h6>
+						</a>
+						{% else %}
+							<h6 class="card-subtitle mb-2 text-muted">None</h6>
+						{% endif %}
 						<p class="card-text" style="text-align: right;">{{ i.effort }} hrs</p>
 					</div>
 				</div class="card">
