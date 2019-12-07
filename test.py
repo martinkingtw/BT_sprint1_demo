@@ -50,7 +50,7 @@ task = [[ ("create user object for registration", 8, name[0], status[2]), ("crea
 	[ ("interface for user to insert details to create project", 6, name[1], status[2]), ("permitted user can access project after project creation", 4, name[2], status[2]) ], # pbi 2
 	[ ("send invitation email to selected developers", 5, name[2], status[2]), ("include invited developer to the project after confirmation", 3, name[1], status[2]) ], # pbi 3
 	[ ("send invitation email to selected manager", 2, name[3], status[2]), ("include invited manager into porject after confirmation", 2, name[0], status[2]) ], # pbi 4
-	[ ("access profile of developer", 4, name[0], status[2]), ("create a profile showing the details of workload of a developer", 6, name[0], status[0]) ] # pbi 5
+	[ ("access profile of developer", 4, name[0], status[2]), ("create a profile showing the details of workload of a developer", 6, name[0], status[2]) ] # pbi 5
        ]
 
 #####################################################################
